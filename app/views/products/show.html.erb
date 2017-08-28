@@ -1,2 +1,13 @@
-<h1>Products#show</h1>
-<p>Find me in app/views/products/show.html.erb</p>
+<h3><%= @product.title%></h3>
+
+<% if @product.photos.any? %>
+	<% @product.photos.each do |photo| %>
+		<%= image_tag(photo.image.url) %>
+	<% end %>
+<% end %>
+
+<h4>Product Description</h4>
+<p><%= @product.description %></p>
+
+<h4>$<%= @product.price %></h4>
+<h4>Availability: <%= @product.stock>0? "In Stock" : "Out of stock" %></h4>
