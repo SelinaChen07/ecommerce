@@ -2,7 +2,7 @@
 
 <% if @product.photos.any? %>
 	<% @product.photos.each do |photo| %>
-		<%= image_tag(photo.image.url) %>
+		<%= image_tag(photo.image.url) if photo.image.url %>
 	<% end %>
 <% end %>
 
@@ -11,3 +11,6 @@
 
 <h4>$<%= @product.price %></h4>
 <h4>Availability: <%= @product.stock>0? "In Stock" : "Out of stock" %></h4>
+
+<%= link_to("Edite", edit_product_path(@product)) %>
+<%= link_to("Delete", product_path(@product), method: :delete, data:{confirm:"Are you sure to delete this product?"}) %>

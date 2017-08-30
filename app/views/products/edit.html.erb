@@ -1,2 +1,35 @@
-<h1>Products#edit</h1>
-<p>Find me in app/views/products/edit.html.erb</p>
+<h3>Edit the product profile</h3>
+
+<%= form_for @product, html:{multipart:true} do |f| %>
+	<%= render "shared/error_messages", object: @product %>
+	<%= f.label :title, "Title" %>
+	<%= f.text_field :title %> </br>
+	<%= f.label :abstract, "Abstract" %>
+	<%= f.text_field :abstract %> </br>
+	<%= f.label :destription, "Description" %>
+	<%= f.text_area :description %> </br>
+	<%= f.label :price, "Price" %>
+	<span>$</span><%= f.text_field :price, placeholder:"00.00" %> </br>
+	<%= f.label :stock, "Stock" %>
+	<%= f.text_field :stock, placeholder:"Integer only" %> </br>
+
+	<h4>Product photos</h4>
+	
+	<%= f.fields_for :photos do |added_form| %>	
+		<% if !@product.photos[added_form.index].image.file.nil? %>
+			<h5>Image<%= added_form.index+1 %></h5>
+			<%= image_tag(@product.photos[added_form.index].image.preview.url) %>		
+				<%= added_form.hidden_field :image_cache %>
+				<%= added_form.check_box :_destroy %>
+				<%= added_form.label :_destroy, "Delete the photo" %>			
+		<% else %>
+			<h5>Upload a new image</h5>
+			<%= added_form.file_field :image, accept:'image/jpeg, image/gif, image/png' %>
+			<%= added_form.hidden_field :image_cache %></br>
+		<% end %>
+	<% end %>
+
+	<%= f.submit "Update" %>
+
+
+<% end %>
