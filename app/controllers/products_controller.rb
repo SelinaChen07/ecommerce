@@ -4,6 +4,20 @@ class ProductsController < ApplicationController
   end
 
   def new
+    @product = Product.new
+    3.times{@product.photos.build}
+  end
+
+  def create
+    @product = Product.new(product_params)
+    if @product.save
+     flash[:sucess] = "The product is created."
+      redirect_to product_path(@product)
+      CarrierWave.clean_cached_files! 1
+    else
+     3.times{@product.photos.build}
+     render"new"
+    end
   end
 
   def edit
@@ -24,6 +38,10 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    flash[:sucess] = "The product is deleted."
+    redirect_to root_path
   end
 
   private 
