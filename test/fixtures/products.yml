@@ -1,15 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  abstract: MyString
-  description: MyText
-  price: 9.99
-  stock: 1
+  title: Product 1
+  abstract: Abstract of product 1.
+  description: This is the description of product 1.
+  price: 10.00
+  stock: 10
 
 two:
-  title: MyString
-  abstract: MyString
-  description: MyText
-  price: 9.99
-  stock: 1
+  title: Product 2
+  abstract: Abstract of product 2.
+  description: This is the description of product 2.
+  price: 11.11
+  stock: 0

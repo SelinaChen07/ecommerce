@@ -10,7 +10,7 @@
 <p><%= @product.description %></p>
 
 <h4>$<%= @product.price %></h4>
-<h4>Availability: <%= @product.stock>0? "In Stock" : "Out of stock" %></h4>
+<h4>Availability: <%= @product.stock>0? "In Stock" : "Out of Stock" %></h4>
 
 <%= link_to("Edite", edit_product_path(@product)) %>
 <%= link_to("Delete", product_path(@product), method: :delete, data:{confirm:"Are you sure to delete this product?"}) %>

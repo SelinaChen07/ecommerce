@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
     if @product.save
      flash[:sucess] = "The product is created."
       redirect_to product_path(@product)
-      CarrierWave.clean_cached_files! 1
+      CarrierWave.clean_cached_files! 0
     else
      3.times{@product.photos.build}
      render"new"
@@ -30,7 +30,7 @@ class ProductsController < ApplicationController
   	if @product.update(product_params)
      flash[:sucess] = "The product profile is updated."
   		redirect_to product_path(@product)
-      CarrierWave.clean_cached_files! 1
+      CarrierWave.clean_cached_files! 0
   	else
      3.times{@product.photos.build}
   		render"edit"
