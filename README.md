@@ -63,3 +63,6 @@ App Development Breakdown
 	has_many :categorizations
 	has_many :products, through: :categorizations
 
+
+Seed products with photos
+Add Category models
