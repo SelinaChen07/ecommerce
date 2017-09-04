@@ -64,5 +64,8 @@ App Development Breakdown
 	has_many :products, through: :categorizations
 
 
-Seed products with photos
-Add Category models
+show flash
+category controller
+product_edit category
+
+Admin page useful link eg: uncategorized products

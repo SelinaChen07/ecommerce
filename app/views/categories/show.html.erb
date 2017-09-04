@@ -1,0 +1,6 @@
+<h3><%= @category.name %></h3>
+
+<% @products.each do |product| %>
+	<%= render "product_list_admin_view", product: product %>
+<% end %>
+

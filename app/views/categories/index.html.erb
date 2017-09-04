@@ -2,7 +2,12 @@
 
 <ul>
 	<% @categories.each do |category| %>
-		<li><%= category.name%></li>
-		
+		<li>
+			<%= link_to category.name, category_path(category)%>
+			<%= link_to "Edit", edit_category_path(category) %>
+			<%= link_to "Delete", category_path(category), method: :delete, data:{confirm:"Are you sure?"} %>
+		</li>
 	<% end %>
 </ul>
+
+<%= link_to "Create A New Category", new_category_path %>

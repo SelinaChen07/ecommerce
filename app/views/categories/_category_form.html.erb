@@ -1,0 +1,6 @@
+<%= form_for @category do |f| %>
+	<%= render "shared/error_messages", object: @category %>
+	<%= f.label :name, "Name" %>
+	<%= f.text_field :name %>
+	<%= f.submit "Submit" %>
+<% end %>
