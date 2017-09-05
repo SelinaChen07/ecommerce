@@ -5,7 +5,9 @@ class ProductsController < ApplicationController
 
   def new
     @product = Product.new
-    3.times{@product.photos.build}
+    @category_options = Category.all.map{|category| [category.name, category.id]}
+    5.times{@product.photos.build}
+    5.times{@product.categorizations.build}
   end
 
   def create
@@ -15,14 +17,18 @@ class ProductsController < ApplicationController
       redirect_to product_path(@product)
       CarrierWave.clean_cached_files! 0
     else
-     3.times{@product.photos.build}
+     5.times{@product.photos.build}
+     5.times{@product.categorizations.build}
+     @category_options = Category.all.map{|category| [category.name, category.id]}
      render"new"
     end
   end
 
   def edit
   	@product = Product.find(params[:id])
-  	3.times{@product.photos.build}
+    @category_options = Category.all.map{|category| [category.name, category.id]}
+  	5.times{@product.photos.build}
+    5.times{@product.categorizations.build}
   end
 
   def update  	
@@ -32,7 +38,9 @@ class ProductsController < ApplicationController
   		redirect_to product_path(@product)
       CarrierWave.clean_cached_files! 0
   	else
-     3.times{@product.photos.build}
+     5.times{@product.photos.build}
+     5.times{@product.categorizations.build}
+     @category_options = Category.all.map{|category| [category.name, category.id]}
   		render"edit"
   	end
   end
@@ -46,6 +54,6 @@ class ProductsController < ApplicationController
 
   private 
   def product_params
-  	params.require(:product).permit(:title, :abstract, :description, :price, :stock, photos_attributes:[:id,:image,:image_cache, :_destroy])
+  	params.require(:product).permit(:title, :abstract, :description, :price, :stock, photos_attributes:[:id,:image,:image_cache, :_destroy], categorizations_attributes:[:id,:category_id, :_destroy])
   end
 end

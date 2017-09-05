@@ -11,6 +11,17 @@
 	<%= f.label :stock, "Stock" %>
 	<%= f.text_field :stock, placeholder:"Integer only" %> </br>
 
+	<h4>Product Categories</h4>
+	<%= f.fields_for :categorizations do |added_form| %>
+		<%= added_form.select :category_id, @category_options, {prompt: "Select a Category"} %> 
+		<% if product.categorizations[added_form.index].category_id %>
+			<%= added_form.check_box :_destroy %>
+			<%= added_form.label :_destroy, "Delete" %> 
+		<% end %>
+		</br>
+	<% end %>
+
+
 	<h4>Product photos</h4>
 	
 	<%= f.fields_for :photos do |added_form| %>	

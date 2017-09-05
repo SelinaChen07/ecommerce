@@ -64,8 +64,10 @@ App Development Breakdown
 	has_many :products, through: :categorizations
 
 
-show flash
-category controller
-product_edit category
 
 Admin page useful link eg: uncategorized products
+_product_list_admin_view => _product_list (if admin stock: stock number else availability)
+product show.html if admin show category and stock
+
+categorization add_index uniqueness
+nested attributes summary
