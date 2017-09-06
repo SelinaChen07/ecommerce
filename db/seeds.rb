@@ -64,8 +64,19 @@ category1 = Category.create(name: "Photo Products")
 category2 = Category.create(name: "Jewelry")
 category3 = Category.create(name: "For Him")
 category4 = Category.create(name: "For Her")
-category5 = Category.create(name: "For Bub")
-category6 = Category.create(name: "On Sale")
-category7 = Category.create(name: "Best Sellers")
+category5 = Category.create(name: "For Family")
+category6 = Category.create(name: "For Bub")
+category7 = Category.create(name: "On Sale")
+category8 = Category.create(name: "Best Sellers")
 
 category1.products << [product1, product2, product3]
+category8.products << [product1, product2, product3]
+
+for index in 1..10
+	product = Product.create(title:"Title for the product#{index}", abstract:"Brief description of the product#{index}", description: "Detailed description of the product#{index}", price: 100)
+	product.categories<<[category1, category7]
+	photo = product.photos.new
+	photo.remote_image_url="https://media.gettingpersonal.co.uk/2/images/assets/summary/personalised-gifts/4x4-Jewellery.jpg"
+	photo.save
+end
+
