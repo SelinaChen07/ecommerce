@@ -1,5 +1,5 @@
 <div class="col-1-4">
-	<%=link_to(image_tag(product.photos.first.image.preview.url), product_path(product), class: "product_image") if product.photos.first.image? %>	
+	<%=link_to(image_tag(product.photos.first.image.preview.url), product_path(product), class: "product_image") if product.photos[0] %>	
 	<h3 class="product_title"><%=link_to product.title, product_path(product)%></h3>
 	<p class="product_abstract"><%= product.abstract%></p>
 	<h4 class="product_price"><%= number_to_currency(product.price) %></h4>

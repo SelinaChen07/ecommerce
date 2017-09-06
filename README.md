@@ -37,8 +37,9 @@ App Development Breakdown
    has_many :photos, inverse_of: :product
    accepts_nested_attributes_for :photos
 
-   has_many :categorizations
-   has_many :categories, through: :categorizations
+   has_many :categorizations, dependent: :destroy, inverse_of: :product
+  has_many :categories, through: :categorizations
+  accepts_nested_attributes_for :categorizations, :allow_destroy => true, reject_if: proc{|attributes| attributes['category_id'].blank?}
    
    has_many :order_items
    has_many :orders, through: :order_items
@@ -54,14 +55,14 @@ App Development Breakdown
 	product_id: integer
 	category_id: integer
 
-	belongs_to :product
-	belongs_to :category
+	belongs_to :product, inverse_of: :categorizations
+  belongs_to :category, inverse_of: :categorizations
 
 1.1.4 categories
 	name:string
 
-	has_many :categorizations
-	has_many :products, through: :categorizations
+	has_many :categorizations, dependent: :destroy, inverse_of: :category
+  has_many :products, through: :categorizations
 
 
 

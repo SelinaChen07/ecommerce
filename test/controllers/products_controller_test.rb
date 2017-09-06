@@ -1,5 +1,5 @@
 require 'test_helper'
-require 'fileutils'
+#require 'fileutils'
 
 class ProductsControllerTest < ActionDispatch::IntegrationTest
 
