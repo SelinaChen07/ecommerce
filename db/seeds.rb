@@ -64,7 +64,8 @@ category1 = Category.create(name: "Photo Products")
 category2 = Category.create(name: "Jewelry")
 category3 = Category.create(name: "For Him")
 category4 = Category.create(name: "For Her")
-category5 = Category.create(name: "For the Bubs")
+category5 = Category.create(name: "For Bub")
 category6 = Category.create(name: "On Sale")
+category7 = Category.create(name: "Best Sellers")
 
 category1.products << [product1, product2, product3]

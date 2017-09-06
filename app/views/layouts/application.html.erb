@@ -4,7 +4,7 @@
     <title>
       <%= "#{yield(:title)} | " if !yield(:title).empty? %>Ecommerce
     </title>
-    <% console %>
+    
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -16,9 +16,16 @@
   </head>
 
   <body>
-  	<% flash.each do |message_type, message| %>
-  		<div class="alert alert-<%= message_type%>"><%= message %></div>
-  	<% end %>
-    <%= yield %>
+    <%= render "layouts/header" %>
+
+  	<div class="container">
+      <% flash.each do |message_type, message| %>
+    		<div class="alert alert-<%= message_type%>"><%= message %></div>
+    	<% end %>
+      
+      <%= yield %>
+    </div>
+
+    <%= render "layouts/footer" %>
   </body>
 </html>

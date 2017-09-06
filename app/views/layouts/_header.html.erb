@@ -1,0 +1,18 @@
+<header class="container header">
+	<section class="primary_header group">
+		<div class="logo">
+			<h1><a href="<%= root_path %>">ONLY 4 YOU</a></h1>
+			<h2>Personalised Gift Station</h2>
+		</div>
+	</section>
+	<nav>
+		<ul class="primary_nav">
+			<% Category.all.each do |category| %>
+				<li id="nav">
+					<%= link_to category.name, category_path(category) %>
+				</li>
+			<% end %>
+		</ul>
+	</nav>
+
+</header>
