@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+product1:
   title: Product 1
   abstract: Abstract of product 1.
   description: This is the description of product 1.
   price: 10.00
   stock: 10
 
-two:
+product2:
   title: Product 2
   abstract: Abstract of product 2.
   description: This is the description of product 2.

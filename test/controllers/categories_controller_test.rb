@@ -4,7 +4,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   
   def setup
     @categories = Category.all
-    @category = categories(:one)
+    @category = categories(:category1)
     @products = @category.products
   end
 

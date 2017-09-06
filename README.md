@@ -72,3 +72,4 @@ product show.html if admin show category and stock
 
 categorization add_index uniqueness
 nested attributes summary
+
