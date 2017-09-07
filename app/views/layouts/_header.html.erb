@@ -8,8 +8,15 @@
 	<nav>
 		<ul class="primary_nav">
 			<% Category.all.each do |category| %>
-				<li id="nav">
-					<%= link_to category.name, category_path(category) %>
+				
+				<% case category.name.downcase %>
+				<% when "on sale" then category_id = "onsale" %>
+				<% when "best sellers" then category_id = "bestseller" %>
+				<% else category_id = ""%>
+				<% end %>
+
+				<li id= <%=category_id%>>
+					<%= link_to category.name, category_path(category)%>
 				</li>
 			<% end %>
 		</ul>

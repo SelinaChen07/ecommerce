@@ -205,3 +205,73 @@ a {
     background-color: #FFDA9D;
     color: #FF783B;
 }
+
+/*
+  ========================================
+  Header/Footer
+  ========================================
+*/
+.header, .footer{
+  background: red;
+  background: rgba(255,0,0, 0.25);
+  background: linear-gradient(to right, #fff, rgba(255,0,0,.25));
+}
+/*
+/*
+  ========================================
+  Primary header
+  ========================================
+*/
+.logo{
+    color: red;
+    font-weight: 100;
+    letter-spacing: .2em;
+    padding: 40px 0 0 80px;
+    float: left;
+    font-family: 'Lobster', Helvetica, Arial, sans-serif;   
+    background: url("umbrella_logo.png") 0 50% no-repeat;
+    background-size: 80px;
+
+}
+
+/*
+  ========================================
+  Primary navigation bar
+  ========================================
+*/
+.primary_nav{
+  border-top: 1px solid #EBEBEB;
+  border-bottom: 2px solid #E8E8E8;
+  margin-bottom: 10px;
+}
+
+.primary_nav li{
+  font-size: 21px;
+  display: inline-block;
+  padding: 0.5em 1em 0.5em 0;
+  letter-spacing: .005em;
+  text-transform: uppercase;
+}
+
+#onsale{
+  color: red;
+}
+
+#bestseller{
+  color: blue;
+}
+
+
+/*
+  ========================================
+  Footer
+  ========================================
+*/
+.footer{
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+#copyright{
+  float: right;
+}
