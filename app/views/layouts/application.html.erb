@@ -9,6 +9,9 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+    
     <!--[if lt IE 9]>
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
       </script>
@@ -19,9 +22,13 @@
     <%= render "layouts/header" %>
 
   	<div class="container">
-      <% flash.each do |message_type, message| %>
-    		<div class="alert alert-<%= message_type%>"><%= message %></div>
-    	<% end %>
+      <% if !flash.empty? %>
+        <section class="row flash">
+          <% flash.each do |message_type, message| %>
+        		<div class="alert alert-<%= message_type%>"><%= message %></div>
+        	<% end %>
+        </section>
+      <% end %>
       
       <%= yield %>
     </div>

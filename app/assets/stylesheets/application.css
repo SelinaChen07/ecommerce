@@ -92,6 +92,15 @@ table {
     padding: 0 30px;
 }
 
+.row{
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.grid{
+
+}
 
  .col-1-4 {
   margin: 0;
@@ -100,7 +109,15 @@ table {
   display: inline-block;
   vertical-align: top;
   text-align: center;
+ }
 
+ .col-1-2 {
+  margin: 0;
+  width: 49%;
+  padding: 15px 15px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
  }
 
 /*
@@ -170,6 +187,31 @@ h5 {
 small{
   font-size: 14px;
 }
+/*
+  ========================================
+  Flash
+  ========================================
+*/
+.alert {
+  font-size: 21px;
+  font-style: italic;
+}
+
+.alert-success {
+  color: green;
+}
+
+.alert-warning {
+  color: yellow;
+}
+
+.alert-danger {
+  color: red;
+}
+
+.alert-info {
+  color: blue;
+}
 
 /*
   ========================================
@@ -182,7 +224,6 @@ a:hover {
 
 }
 a {
-  font: inherit;
   color: inherit;
   text-decoration: none;
 }
@@ -274,4 +315,68 @@ a {
 
 #copyright{
   float: right;
+}
+
+
+
+/*
+  ========================================
+  Form with Errors
+  ========================================
+*/
+.field_with_errors {
+    display: inline-block;
+}
+
+.field_with_errors input {
+    border: 2px solid red;      
+}
+
+#error_explanation {
+    color: red;
+}
+
+/*
+  ========================================
+  Product Index
+  ========================================
+*/
+
+.product_title{
+    height: 2em; /*line-height is 1em, so 2em is 2line */
+}
+
+.product_abstract {
+    height: 3em;
+}
+
+/*
+  ========================================
+  Product Images
+  ========================================
+*/
+.product_list_image{  
+  max-width: 80%;
+  margin: auto;
+}
+
+.product_detailed_image{
+  
+}
+
+.product_preview_image{
+
+}
+
+/*
+ ========================================
+  Product Details
+  ========================================
+*/
+.product_details{
+  text-align: left;
+}
+
+#product_description{
+  margin-top: 30px;
 }

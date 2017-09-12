@@ -1,18 +1,34 @@
 <% provide(:title,@product.title) %>
 
-<h3><%= @product.title%></h3>
+<section class="row">
+	<div class="grid">
+		<section class="col-1-2">
+			<% if @product.photos.any? %>
+				<% @product.photos.each do |photo| %>
+					<%= image_tag(photo.image.url, class: "product_detailed_image") if photo.image.url %>
+				<% end %>
+			<% end %>
+		</section>
 
-<% if @product.photos.any? %>
-	<% @product.photos.each do |photo| %>
-		<%= image_tag(photo.image.url) if photo.image.url %>
-	<% end %>
-<% end %>
+		<section class="col-1-2 product_details">
+			<section class="row"><h1><%= @product.title%></h1></section>
+			<section class="row">
+				<%= link_to("Edit", edit_product_path(@product), class:"btn btn_admin") %>
+				<%= link_to("Delete", product_path(@product), method: :delete, data:{confirm:"Are you sure to delete this product?"}, class:"btn btn_admin") %>
+			</section>
+			<section class="row">
+				<h2>$<%= @product.price %></h2>
+				<h4>Availability: <%= @product.stock>0? "In Stock" : "Out of Stock" %></h4>
+			</section>
+			<section class="row" id="product_description">
+				<h2>Product Description</h2>
+				<p><%= @product.description %></p>
+			</section>
+		</section>
+	</div>
+</section>
 
-<h4>Product Description</h4>
-<p><%= @product.description %></p>
 
-<h4>$<%= @product.price %></h4>
-<h4>Availability: <%= @product.stock>0? "In Stock" : "Out of Stock" %></h4>
 
-<%= link_to("Edite", edit_product_path(@product), class:"btn btn_admin") %>
-<%= link_to("Delete", product_path(@product), method: :delete, data:{confirm:"Are you sure to delete this product?"}, class:"btn btn_admin") %>
+
+

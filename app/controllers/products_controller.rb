@@ -13,7 +13,7 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
     if @product.save
-     flash[:sucess] = "The product is created."
+     flash[:success] = "The product is created."
       redirect_to product_path(@product)
       CarrierWave.clean_cached_files! 0
     else
@@ -34,7 +34,7 @@ class ProductsController < ApplicationController
   def update  	
   	@product = Product.find(params[:id])
   	if @product.update(product_params)
-     flash[:sucess] = "The product profile is updated."
+     flash[:success] = "The product profile is updated."
   		redirect_to product_path(@product)
       CarrierWave.clean_cached_files! 0
   	else
@@ -48,7 +48,7 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy
-    flash[:sucess] = "The product is deleted."
+    flash[:success] = "The product is deleted."
     redirect_to root_path
   end
 

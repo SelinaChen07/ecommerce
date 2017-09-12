@@ -27,7 +27,7 @@
 	<%= f.fields_for :photos do |added_form| %>	
 		<% if !product.photos[added_form.index].image.file.nil? %>
 			<h5>Image<%= added_form.index+1 %></h5>
-			<%= image_tag(product.photos[added_form.index].image.preview.url) %>		
+			<%= image_tag(product.photos[added_form.index].image.preview.url, class: "product_preview_image") %>		
 				<%= added_form.hidden_field :image_cache %>
 				<%= added_form.check_box :_destroy %>
 				<%= added_form.label :_destroy, "Delete the photo" %>			
