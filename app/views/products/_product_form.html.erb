@@ -1,44 +1,56 @@
 <%= form_for product, html:{multipart:true} do |f| %>
+
 	<%= render "shared/error_messages", object: product %>
-	<%= f.label :title, "Title" %>
-	<%= f.text_field :title %> </br>
-	<%= f.label :abstract, "Abstract" %>
-	<%= f.text_field :abstract %> </br>
-	<%= f.label :destription, "Description" %>
-	<%= f.text_area :description %> </br>
-	<%= f.label :price, "Price" %>
-	<span>$</span><%= f.text_field :price, placeholder:"00.00" %> </br>
-	<%= f.label :stock, "Stock" %>
-	<%= f.text_field :stock, placeholder:"Integer only" %> </br>
 
-	<h4>Product Categories</h4>
-	<%= f.fields_for :categorizations do |added_form| %>
-		<%= added_form.select :category_id, @category_options, {prompt: "Select a Category"} %> 
-		<% if product.categorizations[added_form.index].category_id %>
-			<%= added_form.check_box :_destroy %>
-			<%= added_form.label :_destroy, "Delete" %> 
-		<% end %>
-		</br>
-	<% end %>
-
-
-	<h4>Product photos</h4>
+  <div class="row">
 	
-	<%= f.fields_for :photos do |added_form| %>	
-		<% if !product.photos[added_form.index].image.file.nil? %>
-			<h5>Image<%= added_form.index+1 %></h5>
-			<%= image_tag(product.photos[added_form.index].image.preview.url, class: "product_preview_image") %>		
-				<%= added_form.hidden_field :image_cache %>
-				<%= added_form.check_box :_destroy %>
-				<%= added_form.label :_destroy, "Delete the photo" %>			
-		<% else %>
-			<h5>Upload a new image</h5>
-			<%= added_form.file_field :image, accept:'image/jpeg, image/gif, image/png' %>
-			<%= added_form.hidden_field :image_cache %></br>
+	<section class="col-1-2 align-left">
+		<%= f.label :title, "Title", class:"form_label" %>
+		<%= f.text_field :title, class:"form_input" %> 
+
+		<%= f.label :abstract, "Abstract", class:"form_label"  %>
+		<%= f.text_field :abstract, class:"form_input"  %>
+
+		<%= f.label :description, "Description", class:"form_label"  %>
+		<%= f.text_area :description, class:"form_input"  %>
+	</section>
+
+	<section class="col-1-2 align-left">
+		<%= f.label :price, "Price", class:"form_label"  %>
+		<span id="currency_symbol">$</span><%= f.text_field :price, placeholder:"00.00", class:"form_input"%> </br>
+
+		<%= f.label :stock, "Stock", class:"form_label"  %>
+		<%= f.text_field :stock, placeholder:"Integer only", class:"form_input"  %> 
+
+		<%= f.label :categorizations_attributes, "Product Category", class:"form_label"  %>
+		<%= f.fields_for :categorizations do |added_form| %>
+			<%= added_form.select :category_id, @category_options, {prompt: "Select a Category"}, class:"form_select" %> 
 		<% end %>
-	<% end %>
+	</section>
+  </div>
 
-	<%= f.submit "Submit" %>
+  <div class="row">
+		<%= f.label :photos_attributes, "Product Photos", class:"form_label"  %>
+		
+		<%= f.fields_for :photos do |added_form| %>	
+			<% if !product.photos[added_form.index].image.file.nil? %>
+			  <div class="col-1-4 align-left">
+				<h4 class="form_sub_label">Image<%= added_form.index+1 %></h4>
+				<%= image_tag(product.photos[added_form.index].image.preview.url, class: "product_preview_image") %></br>	
+					<%= added_form.hidden_field :image_cache %>
+					<%= added_form.check_box :_destroy %>
+					<%= added_form.label :_destroy, "Delete the photo"%>		
+			  </div>	
+			<% else %>
+			  <div>
+				<h4 class="form_sub_label">Upload a new image</h4>
+				<%= added_form.file_field :image, accept:'image/jpeg, image/gif, image/png', class:"form_file" %>
+				<%= added_form.hidden_field :image_cache %></br>
+			  </div>
+			<% end %>
+		<% end %>
+  </div>
 
+	<%= f.submit "Submit", class:"btn_submit" %>
 
 <% end %>

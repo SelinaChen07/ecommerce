@@ -6,8 +6,8 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @category_options = Category.all.map{|category| [category.name, category.id]}
-    5.times{@product.photos.build}
-    5.times{@product.categorizations.build}
+    6.times{@product.photos.build}
+    3.times{@product.categorizations.build}
   end
 
   def create
@@ -17,8 +17,8 @@ class ProductsController < ApplicationController
       redirect_to product_path(@product)
       CarrierWave.clean_cached_files! 0
     else
-     5.times{@product.photos.build}
-     5.times{@product.categorizations.build}
+     6.times{@product.photos.build}
+     3.times{@product.categorizations.build}
      @category_options = Category.all.map{|category| [category.name, category.id]}
      render"new"
     end
@@ -27,8 +27,8 @@ class ProductsController < ApplicationController
   def edit
   	@product = Product.find(params[:id])
     @category_options = Category.all.map{|category| [category.name, category.id]}
-  	5.times{@product.photos.build}
-    5.times{@product.categorizations.build}
+  	6.times{@product.photos.build}
+    3.times{@product.categorizations.build}
   end
 
   def update  	
@@ -38,8 +38,8 @@ class ProductsController < ApplicationController
   		redirect_to product_path(@product)
       CarrierWave.clean_cached_files! 0
   	else
-     5.times{@product.photos.build}
-     5.times{@product.categorizations.build}
+     6.times{@product.photos.build}
+     3.times{@product.categorizations.build}
      @category_options = Category.all.map{|category| [category.name, category.id]}
   		render"edit"
   	end
