@@ -10,6 +10,8 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
+    <link rel="shortcut icon" href="/assets/logo.png" type="image/png">
+
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
     
     <!--[if lt IE 9]>
@@ -21,15 +23,15 @@
   <body>
     <%= render "layouts/header" %>
 
-  	<div class="container">
-      <% if !flash.empty? %>
+    <% if !flash.empty? %>
         <section class="row flash">
           <% flash.each do |message_type, message| %>
-        		<div class="alert alert-<%= message_type%>"><%= message %></div>
-        	<% end %>
+            <div class="alert alert-<%= message_type%>"><%= message %></div>
+          <% end %>
         </section>
-      <% end %>
-      
+    <% end %>
+
+  	<div class="container">      
       <%= yield %>
     </div>
 

@@ -65,6 +65,58 @@ App Development Breakdown
   has_many :products, through: :categorizations
 
 
+2. Orders
+2.1 orders
+  user_id: integer
+  
+  add_column :orders, :status, :string, default: creating
+  (creating/placed/packing/delivering/delivered/canceled)
+
+  belongs_to :user
+  has_many :order_items
+
+2.2 order_items
+  order_id :integer
+  product_id :integer
+  product_quantity :integer
+
+  belongs_to :order
+  belongs_to :product
+
+
+2.3 Implementing an order flow
+2.3.1  Link for adding a product to cart
+  Under product_path(@product) page, @order_item = OrderItem.new, form_for @order_item includes :order_quantity and hidden_field @product.id. 
+
+2.3.2  order_items#create action
+  When click on "Add to Cart" will be corresponding to create action.
+  order_id is stored in session[:order_id]
+  if !@order = Order.find_by(id: session[:order_id])
+    @order = Order.create
+    session[:order_id] = @order.id
+  end
+  OrderItem.create(order_id:@order.id, product_id: params[:order_item][:product_id], product_quatity:params[:order_item][:product_quantity])
+  flash.now and stay on the page?
+
+2.3.3 view shopping cart
+  if !@order = Order.find_by(id: session[:order_id])
+    @order = Order.create
+    session[:order_id] = @order.id
+  end 
+  <%= link_to order_path(@order.id) %>
+
+  Edit order_item quantity #edit action with json respond
+  Delete order_item
+
+   
+2.3.4 checkout
+  before_checkout: check stock, order_item.product_quantity < product.stock
+  Filling address
+  payment
+
+
+3.Users
+
 
 Admin page useful link eg: uncategorized products
 _product_list_admin_view => _product_list (if admin stock: stock number else availability)
@@ -72,6 +124,6 @@ product show.html if admin show category and stock
 
 current position, eg: for him > cards
 
-form css
+
 
 

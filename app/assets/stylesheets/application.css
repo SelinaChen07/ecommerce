@@ -142,6 +142,7 @@ table {
   *zoom: 1;
  }
 
+
  /*
   ========================================
   Typography
@@ -241,6 +242,32 @@ a {
 }
 /*
   ========================================
+  Table
+  ========================================
+*/
+th, td{
+  padding: 10px 20px;
+  border: 1px solid silver;
+  border-collapse: collapse;
+}
+thead {
+  line-height: 44px;
+}
+thead th {
+  color:#7B68EE;
+  color:rgba(123,104,238, 0.9);
+  font-size: 21px;
+}
+
+.table_link{
+  color:  #708090;
+  text-decoration: underline;
+}
+.category_name{
+  text-transform: uppercase;
+}
+/*
+  ========================================
   Form
   ========================================
 */
@@ -317,6 +344,10 @@ textarea{
   Flash/Error-message
   ========================================
 */
+.flash{
+  background: #C0C0C0;
+}
+
 .alert {
   font-size: 21px;
   font-style: italic;
@@ -348,12 +379,11 @@ textarea{
   background: #F4AFBF;
   background: rgba(244,175,191, 0.35);
   background: linear-gradient(to right, #fff, rgba(255,0,0,.35),rgba(123,104,238, 0.6));
-  margin-bottom: 22px;
 }
 
 .footer
 {
-  margin-top: 22px;
+  margin-top: 20px;
   background: #FFAFA2;
   background: rgba(244,175,191, 0.35);
   background: linear-gradient(to right,rgba(123,104,238, 0.6), rgba(255,0,0,.35), #fff);
@@ -371,7 +401,7 @@ textarea{
     padding: 40px 0 0 80px;
     float: left;
     font-family: 'Lobster', Helvetica, Arial, sans-serif;   
-    background: url("umbrella_logo.png") 0 50% no-repeat;
+    background: url("logo.png") 0 50% no-repeat;
     background-size: 80px;
 
 }
@@ -384,7 +414,6 @@ textarea{
 .primary_nav{
   border-top: 1px solid #EBEBEB;
   border-bottom: 2px solid #E8E8E8;
-  margin-bottom: 10px;
 }
 
 .primary_nav li{
