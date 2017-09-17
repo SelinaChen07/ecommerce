@@ -69,20 +69,23 @@ App Development Breakdown
 2.1 orders
   user_id: integer
   
-  add_column :orders, :status, :string, default: creating
-  (creating/placed/packing/delivering/delivered/canceled)
+  add_column :orders, :status, :string, default: unsubmitted
+  (unsubmitted/placed/packing/in delivery/delivered/canceled)
 
   belongs_to :user
-  has_many :order_items
+  has_many :order_items, dependent: :destroy
+
+  model method: total
 
 2.2 order_items
   order_id :integer
   product_id :integer
-  product_quantity :integer
+  product_quantity :integer (validates >0)
 
   belongs_to :order
   belongs_to :product
 
+  model method: subtotal
 
 2.3 Implementing an order flow
 2.3.1  Link for adding a product to cart
@@ -95,7 +98,10 @@ App Development Breakdown
     @order = Order.create
     session[:order_id] = @order.id
   end
-  OrderItem.create(order_id:@order.id, product_id: params[:order_item][:product_id], product_quatity:params[:order_item][:product_quantity])
+  if order_item already esists in @order, add quantity
+  else
+    OrderItem.create(order_id:@order.id, product_id: params[:order_item][:product_id], product_quatity:params[:order_item][:product_quantity])
+  end
   flash.now and stay on the page?
 
 2.3.3 view shopping cart
@@ -105,10 +111,13 @@ App Development Breakdown
   end 
   <%= link_to order_path(@order.id) %>
 
-  Edit order_item quantity #edit action with json respond
-  Delete order_item
+  Displaying product image
+  Edit order_item quantity #edit action with json respond?
+  Delete order_item, directed to order after destroyed
+  Empty the shopping cart: delete order
+  check stock, if order_item.product_quantity > product.stock, show warning
 
-   
+
 2.3.4 checkout
   before_checkout: check stock, order_item.product_quantity < product.stock
   Filling address
