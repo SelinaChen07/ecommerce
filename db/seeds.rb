@@ -72,11 +72,11 @@ category8 = Category.create(name: "Best Sellers")
 category1.products << [product1, product2, product3]
 category8.products << [product1, product2, product3]
 
-for index in 1..10
+for index in 1..5
 	product = Product.create(title:"Title for the product#{index}", abstract:"Brief description of the product#{index}", description: "Detailed description of the product#{index}", price: 100)
 	product.categories<<[category1, category7]
 	photo = product.photos.new
-	photo.remote_image_url="https://media.gettingpersonal.co.uk/2/images/assets/summary/personalised-gifts/4x4-Jewellery.jpg"
+	photo.remote_image_url="https://gd2.alicdn.com/bao/uploaded/i2/1063365086/TB27g0eXwUc61BjSZFoXXac1FXa_!!1063365086.jpg"
 	photo.save
 end
 
