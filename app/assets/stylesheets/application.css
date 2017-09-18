@@ -401,7 +401,7 @@ textarea{
     padding: 40px 0 0 80px;
     float: left;
     font-family: 'Lobster', Helvetica, Arial, sans-serif;   
-    background: url("logo.png") 0 50% no-repeat;
+    background: url("/logo.png") 0 50% no-repeat;
     background-size: 80px;
 
 }

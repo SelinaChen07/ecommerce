@@ -123,6 +123,7 @@ App Development Breakdown
   Filling address
   payment
 
+2.3.5 Admin check orders and edit order status
 
 3.Users
 
@@ -132,6 +133,12 @@ _product_list_admin_view => _product_list (if admin stock: stock number else ava
 product show.html if admin show category and stock
 
 current position, eg: for him > cards
+
+order cupon
+
+
+?? heroku no image in assets?
+
 
 
 
