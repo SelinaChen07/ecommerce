@@ -75,7 +75,12 @@ App Development Breakdown
   belongs_to :user
   has_many :order_items, dependent: :destroy
 
-  model method: total
+  model method: 
+  - subtotal(exclude delivery)
+  - total(include delivery)
+  - delivery_fee
+  - item_quantity
+
 
 2.2 order_items
   order_id :integer
@@ -85,36 +90,57 @@ App Development Breakdown
   belongs_to :order
   belongs_to :product
 
-  model method: subtotal
+  model method: 
+  - subtotal
+  - product
 
 2.3 Implementing an order flow
 2.3.1  Link for adding a product to cart
-  Under product_path(@product) page, @order_item = OrderItem.new, form_for @order_item includes :order_quantity and hidden_field @product.id. 
+  products#show:
+  @order_item = OrderItem.new(product_quantity: 1)
+  @order_item.product_id = @product.id
+
+  products/show.html.erb:
+        <%= form_for @order_item do |f| %>
+          <%= f.select :product_quantity, options_for_select(1..9) %>
+          <%= f.hidden_field :product_id %>
+          <%= f.submit "Add to Shopping Cart" %>
+        <% end %> 
 
 2.3.2  order_items#create action
-  When click on "Add to Cart" will be corresponding to create action.
-  order_id is stored in session[:order_id]
-  if !@order = Order.find_by(id: session[:order_id])
-    @order = Order.create
-    session[:order_id] = @order.id
-  end
-  if order_item already esists in @order, add quantity
-  else
-    OrderItem.create(order_id:@order.id, product_id: params[:order_item][:product_id], product_quatity:params[:order_item][:product_quantity])
-  end
-  flash.now and stay on the page?
+  1. get current_order by session[:order_id]
+  2. if order_item already esists in current order, just add the product quantity;
+  else @order_item = @order.order_items.build(order_item_params)
+
+  flash[:success] and redirect to current showing product page?
 
 2.3.3 view shopping cart
-  if !@order = Order.find_by(id: session[:order_id])
-    @order = Order.create
-    session[:order_id] = @order.id
-  end 
-  <%= link_to order_path(@order.id) %>
+  _header.html.erb:  
+  -<%= link_to order_path(current_order) %>
+  
+  orders/show.html.erb:
+  if order.item_quantity == 0
+    "Shopping cart is empty"
+  else
+    - Table with item(image & product name), quantity(ediable)/remove link, price, order_item.subtotal, order.subtotal,delivery_fee, total.
+    - link for empty shopping cart
+    Note: The order_items are always ordered by created_at::asc
+  end
 
-  Displaying product image
-  Edit order_item quantity #edit action with json respond?
-  Delete order_item, directed to order after destroyed
-  Empty the shopping cart: delete order
+  To update product quantity:
+  form_for order_item => order_items#update:
+  if product_quantity == "0" remove @order_item
+  else
+    @order_item.update()
+    if success flash[:success]
+    else flash[:danger] = "Product quantity should be positive integer."
+    end
+    redirect_to order_path(@order_item.order)
+  end
+
+
+
+
   check stock, if order_item.product_quantity > product.stock, show warning
 
 
@@ -122,10 +148,13 @@ App Development Breakdown
   before_checkout: check stock, order_item.product_quantity < product.stock
   Filling address
   payment
+  session[:order_id]=nil
 
 2.3.5 Admin check orders and edit order status
 
 3.Users
+
+move current_order from ApplicationController and application_helper to session_helper
 
 
 Admin page useful link eg: uncategorized products
@@ -135,9 +164,11 @@ product show.html if admin show category and stock
 current position, eg: for him > cards
 
 order cupon
+price original/special offer
 
 
-?? heroku no image in assets?
+
+print price
 
 
 

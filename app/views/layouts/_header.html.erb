@@ -4,6 +4,9 @@
 			<h1><a href="<%= root_path %>">ONLY 4 YOU</a></h1>
 			<h2>Personalised Gift Station</h2>
 		</div>
+		<div class="header_right">
+			<h3><%= link_to "Shopping cart(#{current_order.item_quantity})", order_path(current_order) %></h3>
+		</div>
 	</section>
 	<nav>
 		<ul class="primary_nav">

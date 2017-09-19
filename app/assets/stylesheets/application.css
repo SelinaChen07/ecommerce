@@ -406,6 +406,11 @@ textarea{
 
 }
 
+.header_right{
+  float: right;
+  text-align: right;
+}
+
 /*
   ========================================
   Primary navigation bar

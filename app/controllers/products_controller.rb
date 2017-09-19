@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
   def show
   	@product = Product.find(params[:id])
+    @order_item = OrderItem.new(product_quantity: 1)
+    @order_item.product_id = @product.id
   end
 
   def new

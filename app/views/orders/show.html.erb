@@ -1,0 +1,61 @@
+<% provide(:title, "Shopping Cart") %>
+
+<h1>Your Shopping Cart</h1>
+
+<% if @order.item_quantity == 0 %>
+	<p>Your shopping cart is empty.</p>
+	<%= link_to "Continue shopping", root_path %>
+<% else %>
+	<table>
+		<thead>
+			<tr>
+				<th colspan="2">Item</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Subtotal</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<% @order_items.each do |order_item| %>
+				<tr>
+					<% product = order_item.product %>
+					<td >
+						<%=link_to(image_tag(product.photos.first.image.preview.url, class: "product_preview_image"), product_path(product)) if product.photos[0] %>
+					</td>
+					<td>
+						<%= link_to(product.title, product_path(product)) %>
+					</td>
+					<td>
+						<%= form_for order_item do |f| %>
+							<%= f.text_field :product_quantity %>
+							<%= f.submit "Update Quantity" %>
+						<% end %>
+						<%= link_to "Remove", order_item_path(order_item), method: :delete, data:{confirm:"Are you sure?"} %>
+					</td>
+					<td><%= number_to_currency(product.price) %></td>
+					<td><%= number_to_currency(order_item.subtotal) %></td>
+				</tr>
+			<% end %>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<td colspan="4">Subtotal</td>
+				<td><%= number_to_currency(@order.subtotal) %></td>
+			</tr>
+			<tr>
+				<td colspan="4">Est. Standard Delivery*</td>
+				<td><%= number_to_currency(@order.delivery_fee) %></td>
+			</tr>
+			<tr>
+				<td colspan="4">Total</td>
+				<td><%= number_to_currency(@order.total) %></td>
+			</tr>
+			<tr>
+				<td colspan="5"><%= link_to "Checkout", "#" %></td>
+			</tr>
+		</tfoot>
+	</table>
+	<%= link_to "Empty the Shopping Cart", order_path(@order), method: :delete, data:{confirm:"Are you sure?"} %>
+<% end %>

@@ -17,9 +17,18 @@
 				<%= link_to("Delete", product_path(@product), method: :delete, data:{confirm:"Are you sure to delete this product?"}, class:"btn btn_admin") %>
 			</section>
 			<section class="row">
-				<h2>$<%= @product.price %></h2>
+				<h2><%= number_to_currency(@product.price) %></h2>
 				<h4>Availability: <%= @product.stock>0? "In Stock" : "Out of Stock" %></h4>
 			</section>
+
+			<section  class="row">
+				<%= form_for @order_item do |f| %>
+					<%= f.select :product_quantity, options_for_select(1..9) %>
+					<%= f.hidden_field :product_id %>
+					<%= f.submit "Add to Shopping Cart" %>
+				<% end %>
+			</section>
+
 			<section class="row" id="product_description_show">
 				<h2>Product Description</h2>
 				<p><%= @product.description %></p>
