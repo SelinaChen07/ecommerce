@@ -2,7 +2,7 @@
 
 <h1>Your Shopping Cart</h1>
 
-<% if @order.item_quantity == 0 %>
+<% if @order_items.empty? %>
 	<p>Your shopping cart is empty.</p>
 	<%= link_to "Continue shopping", root_path %>
 <% else %>

@@ -68,12 +68,14 @@ App Development Breakdown
 2. Orders
 2.1 orders
   user_id: integer
+  shipping_address_id: integer
   
   add_column :orders, :status, :string, default: unsubmitted
   (unsubmitted/placed/packing/in delivery/delivered/canceled)
 
   belongs_to :user
   has_many :order_items, dependent: :destroy
+  belongs_to :shipping_address
 
   model method: 
   - subtotal(exclude delivery)
@@ -93,6 +95,22 @@ App Development Breakdown
   model method: 
   - subtotal
   - product
+
+2.3 shipping_addresses
+  firstname: string
+  lastname: string
+  phone: string (optional)
+  email: string (optional)
+  line1: string
+  line2: string (optional)
+  city: string
+  state: string
+  country: string(default: Australia)
+  postcode: string
+  user_id :integer
+
+  has_many :orders
+  belongs_to :user
 
 2.3 Implementing an order flow
 2.3.1  Link for adding a product to cart
@@ -115,16 +133,17 @@ App Development Breakdown
   flash[:success] and redirect to current showing product page?
 
 2.3.3 view shopping cart
-  _header.html.erb:  
-  -<%= link_to order_path(current_order) %>
+
+  _header.html.erb:  <%= link_to shoppingcart_path %>
+  [Note]: if user order_path(current_order) for the route of viewing shopping cart. Other users could input ".../orders/some_order_id" in brower's address to change other customer's order if the order is unsubmitted. Plus, we don't want the customer to see the order id. Thus, we add an non-restful route for viewing shopping cart: get '/shoppingcart' => 'orders#shoppingcart'.
   
   orders/show.html.erb:
   if order.item_quantity == 0
     "Shopping cart is empty"
   else
     - Table with item(image & product name), quantity(ediable)/remove link, price, order_item.subtotal, order.subtotal,delivery_fee, total.
-    - link for empty shopping cart
-    Note: The order_items are always ordered by created_at::asc
+    - link for empty shopping cart => @order.destroy, session[:order_id]=nil
+    [Note]: The order_items are always ordered by created_at::asc
   end
 
   To update product quantity:
@@ -138,21 +157,45 @@ App Development Breakdown
     redirect_to order_path(@order_item.order)
   end
 
-
-
-
-  check stock, if order_item.product_quantity > product.stock, show warning
-
-
 2.3.4 checkout
+2.3.4.1 Checkout Button
+  non-restful route for checkout: get '/checkout' => 'orders#checkout'
+when clickon checkout, check stock: if order_item.product_quantity > product.stock, show warning; else redirect_to edit_order_path(@order)
+
+2.3.4.1 ShippingAddress
+  form_for @order
+  f.fields_for :shipping_address
+  f.fields_for :payment
+  f.submit "Confirm Order" => edit_order_path(@order)
+  (show checkout summary at the sidebar)
+
+  orders#update:
+  (Shipping address could be created under 2 situations: 1st loggedin user, 2nd unloggedin user)
+  @shipping_address.user_id = current_user.id if current_user
+  current_order.shipping_address_id = @shipping_address.id if current_order
+
+
+2.3.4.2 Payment
+
+2.3.4.3 Confirmation
+
+2.3.4.4 Submit
+edit_order_path => order.status = "placed"
+session[:order_id]=nil
+
+2.3.5 Order index for admin
+
+
   before_checkout: check stock, order_item.product_quantity < product.stock
   Filling address
   payment
-  session[:order_id]=nil
+  
 
 2.3.5 Admin check orders and edit order status
 
 3.Users
+
+  has_many: shipping_addresses
 
 move current_order from ApplicationController and application_helper to session_helper
 

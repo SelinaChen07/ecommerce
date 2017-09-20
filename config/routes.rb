@@ -6,8 +6,10 @@ Rails.application.routes.draw do
 
     resources :orders
 
-    resources :order_items
+    resources :order_items, only:[:create, :update, :destroy]
 
     root 'categories#index'
+
+    get '/shoppingcart' => 'orders#shoppingcart'
 
 end
