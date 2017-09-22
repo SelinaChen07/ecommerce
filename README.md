@@ -95,18 +95,22 @@ App Development Breakdown
   model method: 
   - subtotal
   - product
+  - enough_stock? (true/false)
+  - print_stock (In stock/Out of Stock/Insufficient Stock)
+
+  [Note]: The order_items are always ordered by created_at::asc(default_scope)
 
 2.3 shipping_addresses
   firstname: string
   lastname: string
   phone: string (optional)
-  email: string (optional)
-  line1: string
-  line2: string (optional)
-  city: string
+  email: string
+  level_or_suite (optional)
+  street_address
+  city: string (optional)
   state: string
   country: string(default: Australia)
-  postcode: string
+  postcode: string (optional)
   user_id :integer
 
   has_many :orders
@@ -130,7 +134,7 @@ App Development Breakdown
   2. if order_item already esists in current order, just add the product quantity;
   else @order_item = @order.order_items.build(order_item_params)
 
-  flash[:success] and redirect to current showing product page?
+  flash[:success] and redirect to current showing product page
 
 2.3.3 view shopping cart
 
@@ -141,26 +145,27 @@ App Development Breakdown
   if order.item_quantity == 0
     "Shopping cart is empty"
   else
-    - Table with item(image & product name), quantity(ediable)/remove link, price, order_item.subtotal, order.subtotal,delivery_fee, total.
+    - Table with item(image & product name), show stock level/quantity(ediable)/remove link, price, order_item.subtotal, order.subtotal,delivery_fee, total.
     - link for empty shopping cart => @order.destroy, session[:order_id]=nil
-    [Note]: The order_items are always ordered by created_at::asc
   end
+  [Note]show stock level in shopping cart. Out of Stock/Insufficient Stock.
 
   To update product quantity:
   form_for order_item => order_items#update:
+  [Note]Use options_for_select(1..12, f.object.product_quantity) to ensure valid input of product quantity.
   if product_quantity == "0" remove @order_item
   else
     @order_item.update()
-    if success flash[:success]
-    else flash[:danger] = "Product quantity should be positive integer."
-    end
-    redirect_to order_path(@order_item.order)
+    flash[:success]    
+    redirect_to shoppingcart_path
   end
 
 2.3.4 checkout
 2.3.4.1 Checkout Button
-  non-restful route for checkout: get '/checkout' => 'orders#checkout'
-when clickon checkout, check stock: if order_item.product_quantity > product.stock, show warning; else redirect_to edit_order_path(@order)
+  - non-restful route for checkout: get '/checkout' => 'orders#checkout'
+  - before_action :check_stock, only:[:checkout] 
+  if !order_item.enough_stock?, flash.now[:danger], render "shoppingcart_page"; 
+    
 
 2.3.4.1 ShippingAddress
   form_for @order
@@ -177,11 +182,16 @@ when clickon checkout, check stock: if order_item.product_quantity > product.sto
 
 2.3.4.2 Payment
 
-2.3.4.3 Confirmation
+2.3.4.3 Confirm Order
+  patch '/confirm_order' => 'orders#confirm_order'
+  if @order.update(checkout_params)
+      session[:order_id] = nil
+      @order.update(status: "placed")
+      (default will render "orders#confirm_order")
+  else
+      render "checkout" 
+  end
 
-2.3.4.4 Submit
-edit_order_path => order.status = "placed"
-session[:order_id]=nil
 
 2.3.5 Order index for admin
 
@@ -201,6 +211,7 @@ move current_order from ApplicationController and application_helper to session_
 
 
 Admin page useful link eg: uncategorized products
+unsubmitted orders, delete in batch if it is 3 months old?
 _product_list_admin_view => _product_list (if admin stock: stock number else availability)
 product show.html if admin show category and stock
 
@@ -209,6 +220,7 @@ current position, eg: for him > cards
 order cupon
 price original/special offer
 
+customer email update
 
 
 print price

@@ -12,4 +12,8 @@ Rails.application.routes.draw do
 
     get '/shoppingcart' => 'orders#shoppingcart'
 
+    get '/checkout' => 'orders#checkout'
+
+    patch '/confirm_order' => 'orders#confirm_order'
+
 end

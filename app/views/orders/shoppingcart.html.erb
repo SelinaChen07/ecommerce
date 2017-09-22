@@ -27,8 +27,9 @@
 						<%= link_to(product.title, product_path(product)) %>
 					</td>
 					<td>
+						<%= order_item.print_stock if !order_item.enough_stock? %>
 						<%= form_for order_item do |f| %>
-							<%= f.text_field :product_quantity %>
+							<%= f.select :product_quantity, options_for_select(1..12, order_item.product_quantity) %>			
 							<%= f.submit "Update Quantity" %>
 						<% end %>
 						<%= link_to "Remove", order_item_path(order_item), method: :delete, data:{confirm:"Are you sure?"} %>
@@ -38,6 +39,7 @@
 				</tr>
 			<% end %>
 		</tbody>
+
 
 		<tfoot>
 			<tr>
@@ -53,7 +55,7 @@
 				<td><%= number_to_currency(@order.total) %></td>
 			</tr>
 			<tr>
-				<td colspan="5"><%= link_to "Checkout", "#" %></td>
+				<td colspan="5"><%= link_to "Checkout", checkout_path %></td>
 			</tr>
 		</tfoot>
 	</table>

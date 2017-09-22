@@ -1,6 +1,8 @@
 class Order < ApplicationRecord
 	
 	has_many :order_items, :dependent => :destroy
+	belongs_to :shipping_address, inverse_of: :orders, optional: true
+	accepts_nested_attributes_for :shipping_address
 
 	def subtotal
 		subtotal = 0

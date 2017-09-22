@@ -23,27 +23,23 @@ class OrderItemsController < ApplicationController
 	end
 
 	def update
-		@order_item = OrderItem.find(params[:id])
-		@order = @order_item.order
+		@order_item = OrderItem.find(params[:id])		
 		new_quantity = order_item_params[:product_quantity]
 		if new_quantity == "0"
 			@order_item.destroy
 			flash[:success] = "The product #{@order_item.product.title} is successfully removed."
 		else
-	  		if @order_item.update(product_quantity: new_quantity)
-				flash[:success] = "Your product quantity is successfully updated."	
-		    else
-		    	flash[:danger] = "The product quantity should be a positive integer."
-		    end
+	  		@order_item.update(product_quantity: new_quantity)
+			flash[:success] = "Your product quantity is successfully updated."	
+			redirect_to shoppingcart_path
 		end
-	    redirect_to @order
 	end
 
 	def destroy
 		@order_item = OrderItem.find(params[:id])
 		@order_item.destroy
 		flash[:success] = "The product #{@order_item.product.title} is successfully removed."
-		redirect_to @order_item.order
+		redirect_to shoppingcart_path
 
 	end
 

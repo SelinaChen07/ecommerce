@@ -1,0 +1,29 @@
+<%= form_for(@order, url:confirm_order_path) do |f| %>
+	<%= render "shared/error_messages", object: @order %>
+	<h1>Shipping Address</h1>
+	<%= f.fields_for :shipping_address do |added_form| %>
+		<%= added_form.label :firstname, "First Name", class:"form_label" %>
+		<%= added_form.text_field :firstname, class:"form_input" %>
+		<%= added_form.label :lastname, "Last Name", class:"form_label" %>
+		<%= added_form.text_field :lastname, class:"form_input" %>
+		<%= added_form.label :phone, "Phone", class:"form_label" %>
+		<%= added_form.text_field :phone, class:"form_input" %>
+		<%= added_form.label :email, "Email", class:"form_label" %>
+		<%= added_form.text_field :email, class:"form_input" %>
+		<%= added_form.label :level_or_suite, "Level/Suite", class:"form_label" %>
+		<%= added_form.text_field :level_or_suite, class:"form_input" %>
+		<%= added_form.label :street_address, "Street Address", class:"form_label" %>
+		<%= added_form.text_field :street_address, class:"form_input" %>
+		<%= added_form.label :city, "City", class:"form_label" %>
+		<%= added_form.text_field :city, class:"form_input" %>
+		<%= added_form.label :state, "State", class:"form_label" %>
+		<%= added_form.text_field :state, class:"form_input" %>
+		<%= added_form.label :country, "Country", class:"form_label" %>
+		<%= added_form.text_field :country, class:"form_input" %>
+		<%= added_form.label :postcode, "Post Code", class:"form_label" %>
+		<%= added_form.text_field :postcode, class:"form_input" %>
+	<% end %>
+
+	<%= f.submit "Confirm the Order" %>
+
+<% end %>
