@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'payments/new'
+
     # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
     resources :products
 
@@ -7,6 +9,8 @@ Rails.application.routes.draw do
     resources :orders
 
     resources :order_items, only:[:create, :update, :destroy]
+
+    resources :payments, only: [:new, :create]
 
     root 'categories#index'
 

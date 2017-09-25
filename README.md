@@ -228,6 +228,8 @@ if shopping cart is not empty, save for 1 month?
 
 move current_order from ApplicationController and application_helper to session_helper
 
+Admin Cancel transaction and Refund
+
 
 Admin page useful link eg: uncategorized products
 unsubmitted orders, delete in batch if it is 3 months old?

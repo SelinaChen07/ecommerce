@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
   def update_order_shipping_address
     @order = current_order
     if @order.update(checkout_shipping_address_params)
-      redirect_to payment_path
+      redirect_to new_payment_path
     else
       render "edit_order_shipping_address" 
     end
@@ -51,26 +51,6 @@ class OrdersController < ApplicationController
   private
   def checkout_shipping_address_params
     params.require(:order).permit(shipping_address_attributes:[:id, :firstname, :lastname, :phone, :email, :level_or_suite, :street_address, :city, :state, :contry, :postcode] )
-  end
-
-  def check_cart
-    @order = current_order
-    if @order.item_quantity == 0
-      current_order.destroy
-      flash[:warning] = "Please add some items to your shopping cart before checkout."
-      redirect_to root_path
-    end
-  end
-
-
-  def check_stock
-    @order_items = @order.order_items
-    @order_items.each do |order_item|
-      if !order_item.enough_stock?
-        flash.now[:danger] = "Sorry, one or more of the items in your shopping cart is not available. Please review your shopping cart."
-        render "shoppingcart"
-      end
-    end
   end
 
 end

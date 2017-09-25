@@ -5,7 +5,7 @@
 	<li class="col-1-3 align-left">3. Confirm</li>
 </ol>
 
-<session class="col-1-2 align-left">	
+<section class="col-1-2 align-left">	
 <%= form_for(@order, url:checkout_path) do |f| %>
 	<%= render "shared/error_messages", object: @order %>
 	<%= f.fields_for :shipping_address do |added_form| %>
@@ -35,4 +35,4 @@
 
 <% end %>
 
-</session>
+</section>
