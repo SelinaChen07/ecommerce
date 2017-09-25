@@ -12,7 +12,11 @@ Rails.application.routes.draw do
 
     get '/shoppingcart' => 'orders#shoppingcart'
 
-    get '/checkout' => 'orders#checkout'
+    get '/checkout' => 'orders#edit_order_shipping_address'
+
+    patch '/checkout' => 'orders#update_order_shipping_address'
+
+    patch '/payment' => 'orders#payment'
 
     patch '/confirm_order' => 'orders#confirm_order'
 

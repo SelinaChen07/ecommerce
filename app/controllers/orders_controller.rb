@@ -1,6 +1,7 @@
 class OrdersController < ApplicationController
-  before_action :check_stock, only:[:checkout]
-
+  before_action :check_cart, only:[:edit_order_shipping_address]
+  before_action :check_stock, only:[:edit_order_shipping_address]
+  
   def index
   end
 
@@ -25,28 +26,44 @@ class OrdersController < ApplicationController
     @order_items = @order.order_items
   end
 
-  def checkout
+  def edit_order_shipping_address
     #@order = current_order #already get the value from check_stock
     @shipping_address = @order.build_shipping_address
   end
 
-  def confirm_order
+  def update_order_shipping_address
     @order = current_order
-    if @order.update(checkout_params)
-      session[:order_id] = nil
-      @order.update(status: "placed")
+    if @order.update(checkout_shipping_address_params)
+      redirect_to payment_path
     else
-      render "checkout" 
+      render "edit_order_shipping_address" 
     end
   end
 
+  def payment
+    
+  end
+
+  def confirm_order
+    
+  end
+
   private
-  def checkout_params
+  def checkout_shipping_address_params
     params.require(:order).permit(shipping_address_attributes:[:id, :firstname, :lastname, :phone, :email, :level_or_suite, :street_address, :city, :state, :contry, :postcode] )
   end
 
-  def check_stock
+  def check_cart
     @order = current_order
+    if @order.item_quantity == 0
+      current_order.destroy
+      flash[:warning] = "Please add some items to your shopping cart before checkout."
+      redirect_to root_path
+    end
+  end
+
+
+  def check_stock
     @order_items = @order.order_items
     @order_items.each do |order_item|
       if !order_item.enough_stock?

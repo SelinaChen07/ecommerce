@@ -83,6 +83,8 @@ App Development Breakdown
   - delivery_fee
   - item_quantity
 
+  [Note]order.destroy, all order items deleted. Consider shipping addresses and payment.
+
 
 2.2 order_items
   order_id :integer
@@ -124,7 +126,7 @@ App Development Breakdown
 
   products/show.html.erb:
         <%= form_for @order_item do |f| %>
-          <%= f.select :product_quantity, options_for_select(1..9) %>
+          <%= f.select :product_quantity, options_for_select(1..12) %>
           <%= f.hidden_field :product_id %>
           <%= f.submit "Add to Shopping Cart" %>
         <% end %> 
@@ -133,7 +135,6 @@ App Development Breakdown
   1. get current_order by session[:order_id]
   2. if order_item already esists in current order, just add the product quantity;
   else @order_item = @order.order_items.build(order_item_params)
-
   flash[:success] and redirect to current showing product page
 
 2.3.3 view shopping cart
@@ -148,7 +149,7 @@ App Development Breakdown
     - Table with item(image & product name), show stock level/quantity(ediable)/remove link, price, order_item.subtotal, order.subtotal,delivery_fee, total.
     - link for empty shopping cart => @order.destroy, session[:order_id]=nil
   end
-  [Note]show stock level in shopping cart. Out of Stock/Insufficient Stock.
+  [Note]show stock status in shopping cart. Out of Stock/Insufficient Stock.
 
   To update product quantity:
   form_for order_item => order_items#update:
@@ -162,23 +163,34 @@ App Development Breakdown
 
 2.3.4 checkout
 2.3.4.1 Checkout Button
-  - non-restful route for checkout: get '/checkout' => 'orders#checkout'
-  - before_action :check_stock, only:[:checkout] 
-  if !order_item.enough_stock?, flash.now[:danger], render "shoppingcart_page"; 
+  - non-restful route for checkout: get '/checkout' => 'orders#edit_order_shipping_address'
+  - before_action :check_cart, only:[:edit_order_shipping_address] (If shopping cart is empty, can't checkout.)
+  - before_action :check_stock, only:[:edit_order_shipping_address]
+  (if !order_item.enough_stock?, flash.now[:danger], render "shoppingcart_page"; )
+
+  [Note] If two customer order the same product the same time and only 1 in stock, they will both see in stock during checkout. To avoid the situation, stock -1 when customer click on checkout. And customer is allowed 20mins to finish the checkout.
     
 
-2.3.4.1 ShippingAddress
-  form_for @order
-  f.fields_for :shipping_address
-  f.fields_for :payment
-  f.submit "Confirm Order" => edit_order_path(@order)
+2.3.4.1 Checkout - Fill in Shipping Address
+  @shipping_address = @order.build_shipping_address
+
+  form_for @order url:checkout_path
+  f.submit "Next" : 
+  patch '/checkout' => 'orders#update_order_shipping_address'  
   (show checkout summary at the sidebar)
 
-  orders#update:
+  link for "log in to save time"
+
   (Shipping address could be created under 2 situations: 1st loggedin user, 2nd unloggedin user)
+  if logged_in
+  choose one of the saved address or create a new from drop-down options. Auto-fill the form if saved address is selected.  
   @shipping_address.user_id = current_user.id if current_user
   current_order.shipping_address_id = @shipping_address.id if current_order
+  else
+   creat a new
+  end
 
+  [Note] Shipping Address and Payment to decouple from order. Create several steps to finish checkout. Customer can go back to the previous step to review the fill in information. When clink on next, information is saved to backend.
 
 2.3.4.2 Payment
 
@@ -196,8 +208,7 @@ App Development Breakdown
 2.3.5 Order index for admin
 
 
-  before_checkout: check stock, order_item.product_quantity < product.stock
-  Filling address
+ Filling address
   payment
   
 
@@ -207,11 +218,20 @@ App Development Breakdown
 
   has_many: shipping_addresses
 
+Pending:
+
+[Note]order.destroy, all order items deleted. Consider shipping addresses and payment.
+
+[Note] If two customer order the same product the same time and only 1 in stock, they will both see in stock during checkout. To avoid the situation, stock -1 when customer click on checkout. And customer is allowed 20mins to finish the checkout.
+current_order.destroy when close browser if shopping cart is empty?
+if shopping cart is not empty, save for 1 month?
+
 move current_order from ApplicationController and application_helper to session_helper
 
 
 Admin page useful link eg: uncategorized products
 unsubmitted orders, delete in batch if it is 3 months old?
+paginate form
 _product_list_admin_view => _product_list (if admin stock: stock number else availability)
 product show.html if admin show category and stock
 

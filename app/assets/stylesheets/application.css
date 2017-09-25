@@ -111,6 +111,15 @@ table {
   text-align: center;
  }
 
+ .col-1-3 {
+  margin: 0;
+  width: 33.1%;
+  padding: 15px 15px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+ }
+
  .col-1-2 {
   margin: 0;
   width: 49%;
@@ -123,6 +132,8 @@ table {
  .align-left{
   text-align: left;
  }
+
+
 
 /*
  ========================================
@@ -416,6 +427,12 @@ textarea{
   Primary navigation bar
   ========================================
 */
+.horizontal_nav li{
+  display: inline-block;  
+  padding: 0.5em 1em 0.5em 0;
+  letter-spacing: .005em;
+}
+
 .primary_nav{
   border-top: 1px solid #EBEBEB;
   border-bottom: 2px solid #E8E8E8;
@@ -423,9 +440,6 @@ textarea{
 
 .primary_nav li{
   font-size: 21px;
-  display: inline-block;
-  padding: 0.5em 1em 0.5em 0;
-  letter-spacing: .005em;
   text-transform: uppercase;
 }
 
@@ -496,3 +510,27 @@ textarea{
 #product_description_show{
   margin-top: 30px;
 }
+
+/*
+ ========================================
+  Checkout
+  ========================================
+*/
+.checkout_nav{  
+  border-bottom: 2px solid black;
+  list-style-type: square;
+  margin-bottom: 20px;
+}
+
+.checkout_nav li{
+  font-size: 36px;
+  line-height: 44px;
+  color: silver;
+
+}
+
+#checkout_session{
+  color: black;
+  font-weight: bolder;
+}
+

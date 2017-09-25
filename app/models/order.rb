@@ -7,7 +7,7 @@ class Order < ApplicationRecord
 	def subtotal
 		subtotal = 0
 		self.order_items.each{|order_item|
-			subtotal = subtotal + order_item.subtotal
+			subtotal += order_item.subtotal
 		}
 		return subtotal
 	end
@@ -27,7 +27,7 @@ class Order < ApplicationRecord
 	def item_quantity
 		item_quantity = 0
 		self.order_items.each{|order_item|
-			item_quantity = item_quantity + order_item.product_quantity
+			item_quantity += order_item.product_quantity
 		}
 		return item_quantity
 	end
