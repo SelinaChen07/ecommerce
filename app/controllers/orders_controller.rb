@@ -12,8 +12,12 @@ class OrdersController < ApplicationController
   end
 
   def destroy
-  	@order = Order.find(params[:id])
-  	@order.destroy
+  	order = Order.find(params[:id])
+    shipping_address = order.shipping_address
+    if !shipping_address.nil?
+      shipping_address.destroy if shipping_address.user_id.nil?
+    end
+  	order.destroy
     session[:order_id] = nil
   	flash[:success] = "You shopping cart is now empty. "
   	redirect_to root_path
