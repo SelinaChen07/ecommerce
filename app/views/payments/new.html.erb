@@ -1,7 +1,7 @@
 <ol class = "horizontal_nav checkout_nav">
-	<li class="col-1-3 align-left">1. Shipping Address</li>
-	<li class="col-1-3 align-left" id="checkout_session">2. Payment</li>
-	<li class="col-1-3 align-left">3. Confirm</li>
+	<li class="col-1-3 align-left"><%= link_to "1. Shopping Cart", shoppingcart_path %></li>
+	<li class="col-1-3 align-left"><%= link_to "2. Delivery", edit_checkout_shipping_address_path%></li>
+	<li class="col-1-3 align-left" id="checkout_session">3. Payment</li>
 </ol>
 
 <section>

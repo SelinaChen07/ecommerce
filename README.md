@@ -193,6 +193,7 @@ App Development Breakdown
   [Note] Shipping Address and Payment to decouple from order. Create several steps to finish checkout. Customer can go back to the previous step to review the fill in information. When clink on next, information is saved to backend.
 
 2.3.4.2 Payment
+  - link_to edit shipping address
 
 2.3.4.3 Confirm Order
   patch '/confirm_order' => 'orders#confirm_order'

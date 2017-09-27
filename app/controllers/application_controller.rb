@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
     @order_items.each do |order_item|
       if !order_item.enough_stock?
         flash.now[:danger] = "Sorry, one or more of the items in your shopping cart is not available. Please review your shopping cart."
-        render "shoppingcart"
+        render "orders/shoppingcart"
       end
     end
   end
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   def check_shipping_address
   	if @order.shipping_address.nil?
   		flash[:danger] = "Please fill in the shipping address before pay."
-        redirect_to checkout_path
+        redirect_to checkout_shipping_address_path
     end
   end
 

@@ -1,0 +1,36 @@
+<ol class = "horizontal_nav checkout_nav">
+	<li class="col-1-3 align-left"><%= link_to "1. Shopping Cart", shoppingcart_path %></li>
+	<li class="col-1-3 align-left" id="checkout_session">2. Delivery</li>
+	<% if current_order.shipping_address.nil? %>
+		<li class="col-1-3 align-left">3. Payment</li>
+	<% else %>
+		<li class="col-1-3 align-left"><%= link_to "3. Payment", new_payment_path%></li>
+	<% end %>
+</ol>
+
+<section class="col-1-2 align-left">	
+<%= form_for(@shipping_address, url:checkout_shipping_address_path) do |f| %>
+	<%= render "shared/error_messages", object: @shipping_address %>
+		<%= f.label :firstname, "First Name", class:"form_label" %>
+		<%= f.text_field :firstname, class:"form_input" %>
+		<%= f.label :lastname, "Last Name", class:"form_label" %>
+		<%= f.text_field :lastname, class:"form_input" %>
+		<%= f.label :phone, "Phone", class:"form_label" %>
+		<%= f.text_field :phone, class:"form_input" %>
+		<%= f.label :email, "Email", class:"form_label" %>
+		<%= f.text_field :email, class:"form_input" %>
+		<%= f.label :level_or_suite, "Level/Suite", class:"form_label" %>
+		<%= f.text_field :level_or_suite, class:"form_input" %>
+		<%= f.label :street_address, "Street Address", class:"form_label" %>
+		<%= f.text_field :street_address, class:"form_input" %>
+		<%= f.label :city, "City", class:"form_label" %>
+		<%= f.text_field :city, class:"form_input" %>
+		<%= f.label :state, "State", class:"form_label" %>
+		<%= f.text_field :state, class:"form_input" %>
+		<%= f.label :country, "Country", class:"form_label" %>
+		<%= f.text_field :country, class:"form_input" %>
+		<%= f.label :postcode, "Post Code", class:"form_label" %>
+		<%= f.text_field :postcode, class:"form_input" %>
+		<%= f.submit "NEXT" %>
+<% end %>
+</section>
