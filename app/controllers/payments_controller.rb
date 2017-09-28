@@ -16,8 +16,7 @@ class PaymentsController < ApplicationController
     if @result.success?
       session[:order_id] = nil
       @order.update(status: "placed")
-      flash[:success] = "Congraulations! Your order has been placed successfully!"
-      redirect_to root_url
+      redirect_to confirm_order_path
     else
       flash[:danger] = "Something went wrong while processing your transaction. Please try again!"
       gon.client_token = generate_client_token

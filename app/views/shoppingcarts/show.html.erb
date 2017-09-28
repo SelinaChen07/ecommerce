@@ -70,5 +70,5 @@
 			</tr>
 		</tfoot>
 	</table>
-	<%= link_to "Empty the Shopping Cart", order_path(@order), method: :delete, data:{confirm:"Are you sure?"} %>
+	<%= link_to "Empty the Shopping Cart", shoppingcart_path, method: :delete, data:{confirm:"Are you sure?"} %>
 <% end %>
