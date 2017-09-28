@@ -5,7 +5,8 @@
 			<h2>Personalised Gift Station</h2>
 		</div>
 		<div class="header_right">
-			<h3><%= link_to "Shopping cart(#{current_order.item_quantity})", shoppingcart_path %></h3>
+			<% shopping_cart_title = order_exist?? "Shopping cart(#{current_order.item_quantity})" : "Shopping Cart" %>
+			<h3><%= link_to "#{shopping_cart_title}", shoppingcart_path %></h3>
 		</div>
 	</section>
 	<nav>

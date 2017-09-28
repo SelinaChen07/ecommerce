@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+ def order_exist?
+    !!@order = Order.find_by(id: session[:order_id])
+  end
+
  def current_order
 	if !@order = Order.find_by(id: session[:order_id])
       		@order = Order.create
@@ -10,9 +14,7 @@ class ApplicationController < ActionController::Base
  end
 
  def check_cart
-    @order = current_order
-    if @order.item_quantity == 0
-      current_order.destroy
+    if !order_exist?
       flash[:warning] = "Please add some items to your shopping cart before checkout."
       redirect_to root_path
     end

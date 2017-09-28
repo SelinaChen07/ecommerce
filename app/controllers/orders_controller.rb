@@ -24,8 +24,10 @@ class OrdersController < ApplicationController
   end
 
   def shoppingcart
-    @order = current_order
-    @order_items = @order.order_items
+    if order_exist?
+      @order = current_order
+      @order_items = @order.order_items
+    end
   end
 
 

@@ -1,6 +1,6 @@
 class Checkout::ShippingAddressesController < ApplicationController
-  before_action :check_cart, only:[:new, :create]
-  before_action :check_stock, only:[:new, :create]
+  before_action :check_cart
+  before_action :check_stock
   before_action :if_address_exist, only:[:new, :create]
   before_action :if_address_not_exist, only:[:edit, :update]
 

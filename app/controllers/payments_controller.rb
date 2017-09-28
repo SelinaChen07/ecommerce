@@ -9,7 +9,6 @@ class PaymentsController < ApplicationController
   end
 
   def create
-  	fail
   	@order = current_order
   	@result = Braintree::Transaction.sale(
               amount: @order.total,
