@@ -1,3 +1,11 @@
+<% provide(:title, "checkout") %>
+
+<% content_for :style do %>
+	.primary_nav{
+		display:none;
+	}
+<% end %>
+
 <ol class = "horizontal_nav checkout_nav">
 	<li class="col-1-3 align-left"><%= link_to "1. Shopping Cart", shoppingcart_path %></li>
 	<li class="col-1-3 align-left" id="checkout_session">2. Delivery</li>
@@ -17,7 +25,7 @@
 		<% label_text = raw "Last Name<span class='must_star'>*</span>" %>
 		<%= f.label :lastname, label_text, class:"form_label" %>
 		<%= f.text_field :lastname, class:"form_input" %>
-		<% label_text = raw "Phone<span class='must_star'>*</span>" %>
+		<% label_text = raw "Phone(Mobile preferred)<span class='must_star'>*</span>" %>
 		<%= f.label :phone, label_text, class:"form_label" %>
 		<%= f.text_field :phone, class:"form_input" %>
 		<% label_text = raw "Email<span class='must_star'>*</span>" %>

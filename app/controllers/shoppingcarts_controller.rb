@@ -9,6 +9,7 @@ class ShoppingcartsController < ApplicationController
   def destroy
   	order = current_order
     order.delete
+    session[:order_id] = nil
   	flash[:success] = "You shopping cart is now empty. "
   	redirect_to root_path
   end
