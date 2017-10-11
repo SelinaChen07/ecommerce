@@ -30,4 +30,14 @@ class Order < ApplicationRecord
 		}
 		return item_quantity
 	end
+
+	def delete
+		shipping_address = self.shipping_address
+	    if !shipping_address.nil?
+	      shipping_address.destroy if shipping_address.user_id.nil?
+	    end
+	  	self.destroy
+	end
 end
+
+  

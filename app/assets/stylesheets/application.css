@@ -66,10 +66,13 @@ table {
 /* End of CSS RESET */
 
 
+
 /* Custom Styles
 ========================================
 */
-
+ol{
+  list-style-type: decimal;
+}
 
 /*
   ========================================
@@ -133,7 +136,15 @@ table {
   text-align: left;
  }
 
+ .align-right{
+  text-align: right;
+ }
 
+.table-align-right{
+  width: auto;
+  margin-right: 0;
+  margin-left: auto;
+}
 
 /*
  ========================================
@@ -202,6 +213,14 @@ h5 {
 
 small{
   font-size: 14px;
+}
+
+.uppercase{
+  text-transform: uppercase;
+}
+
+.capitalize{
+  text-transform: capitalize;
 }
 
 
@@ -295,6 +314,10 @@ thead th {
   color:rgba(123,104,238, 0.9);
   margin-bottom: 10px;
 }
+
+.must_star{
+    font: red;
+  }
 
 .form_input .form_select{
   border: 1px solid darkgrey;
@@ -534,3 +557,9 @@ textarea{
   font-weight: bolder;
 }
 
+
+#payment_image{
+  height: 40px;
+  vertical-align: baseline;
+
+}

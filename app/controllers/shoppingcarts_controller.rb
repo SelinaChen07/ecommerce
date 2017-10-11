@@ -8,12 +8,7 @@ class ShoppingcartsController < ApplicationController
 
   def destroy
   	order = current_order
-    shipping_address = order.shipping_address
-    if !shipping_address.nil?
-      shipping_address.destroy if shipping_address.user_id.nil?
-    end
-  	order.destroy
-    session[:order_id] = nil
+    order.delete
   	flash[:success] = "You shopping cart is now empty. "
   	redirect_to root_path
   end

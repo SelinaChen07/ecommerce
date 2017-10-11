@@ -11,25 +11,35 @@
 <section class="col-1-2 align-left">	
 <%= form_for(@shipping_address, url:checkout_shipping_address_path) do |f| %>
 	<%= render "shared/error_messages", object: @shipping_address %>
-		<%= f.label :firstname, "First Name", class:"form_label" %>
+		<% label_text = raw "First Name<span class='must_star'>*</span>" %>
+		<%= f.label :firstname, label_text, class:"form_label" %>
 		<%= f.text_field :firstname, class:"form_input" %>
-		<%= f.label :lastname, "Last Name", class:"form_label" %>
+		<% label_text = raw "Last Name<span class='must_star'>*</span>" %>
+		<%= f.label :lastname, label_text, class:"form_label" %>
 		<%= f.text_field :lastname, class:"form_input" %>
-		<%= f.label :phone, "Phone", class:"form_label" %>
+		<% label_text = raw "Phone<span class='must_star'>*</span>" %>
+		<%= f.label :phone, label_text, class:"form_label" %>
 		<%= f.text_field :phone, class:"form_input" %>
-		<%= f.label :email, "Email", class:"form_label" %>
+		<% label_text = raw "Email<span class='must_star'>*</span>" %>
+		<%= f.label :email, label_text, class:"form_label" %>
 		<%= f.text_field :email, class:"form_input" %>
 		<%= f.label :level_or_suite, "Level/Suite", class:"form_label" %>
+		<p>eg. Apartment 104</p>
 		<%= f.text_field :level_or_suite, class:"form_input" %>
-		<%= f.label :street_address, "Street Address", class:"form_label" %>
+		<% label_text = raw "Street Address<span class='must_star'>*</span>" %>
+		<%= f.label :street_address, label_text, class:"form_label" %>
 		<%= f.text_field :street_address, class:"form_input" %>
-		<%= f.label :city, "City", class:"form_label" %>
-		<%= f.text_field :city, class:"form_input" %>
-		<%= f.label :state, "State", class:"form_label" %>
+		<% label_text = raw "Suburb/City<span class='must_star'>*</span>" %>
+		<%= f.label :suburb_or_city, label_text, class:"form_label" %>
+		<%= f.text_field :suburb_or_city, class:"form_input" %>
+		<% label_text = raw "State<span class='must_star'>*</span>" %>
+		<%= f.label :state, label_text, class:"form_label" %>
 		<%= f.text_field :state, class:"form_input" %>
-		<%= f.label :country, "Country", class:"form_label" %>
+		<% label_text = raw "Country<span class='must_star'>*</span>" %>
+		<%= f.label :country, label_text, class:"form_label" %>
 		<%= f.text_field :country, class:"form_input" %>
-		<%= f.label :postcode, "Post Code", class:"form_label" %>
+		<% label_text = raw "Post Code<span class='must_star'>*</span>" %>
+		<%= f.label :postcode, label_text, class:"form_label" %>
 		<%= f.text_field :postcode, class:"form_input" %>
 		<%= f.submit "NEXT" %>
 <% end %>

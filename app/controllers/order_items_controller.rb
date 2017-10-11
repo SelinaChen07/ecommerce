@@ -26,7 +26,11 @@ class OrderItemsController < ApplicationController
 		@order_item = OrderItem.find(params[:id])		
 		new_quantity = order_item_params[:product_quantity]
 		if new_quantity == "0"
-			@order_item.destroy
+			if current_order.item_quantity == 0
+				current_order.delete
+				session[:order_id] = nil
+			end
+			current_order.delete if current_order.item_quantity == 0
 			flash[:success] = "The product #{@order_item.product.title} is successfully removed."
 		else
 	  		@order_item.update(product_quantity: new_quantity)
@@ -38,6 +42,10 @@ class OrderItemsController < ApplicationController
 	def destroy
 		@order_item = OrderItem.find(params[:id])
 		@order_item.destroy
+		if current_order.item_quantity == 0
+			current_order.delete
+			session[:order_id] = nil
+		end
 		flash[:success] = "The product #{@order_item.product.title} is successfully removed."
 		redirect_to shoppingcart_path
 

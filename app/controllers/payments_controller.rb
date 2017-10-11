@@ -6,6 +6,9 @@ class PaymentsController < ApplicationController
 
   def new
   	gon.client_token = generate_client_token
+    @order = current_order
+    @order.update(status: "starting payment")
+    @order_items = @order.order_items
   end
 
   def create
@@ -20,6 +23,7 @@ class PaymentsController < ApplicationController
     else
       flash[:danger] = "Something went wrong while processing your transaction. Please try again!"
       gon.client_token = generate_client_token
+      @order.update(status: "payment failed")
       render :new
     end
   end

@@ -5,6 +5,6 @@ class CreateOrders < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_column :orders, :status, :string, :default => "unsubmitted"
+    add_column :orders, :status, :string, :default => "in cart"
   end
 end

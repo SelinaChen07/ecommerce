@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920035515) do
+ActiveRecord::Schema.define(version: 20171011012219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,9 +39,9 @@ ActiveRecord::Schema.define(version: 20170920035515) do
 
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
-    t.string   "status",              default: "unsubmitted"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "status",              default: "in cart"
     t.integer  "shipping_address_id"
   end
 
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20170920035515) do
     t.string   "phone"
     t.string   "email"
     t.string   "level_or_suite"
-    t.string   "city"
+    t.string   "suburb_or_city"
     t.string   "state"
     t.string   "postcode"
     t.integer  "user_id"

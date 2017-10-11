@@ -15,14 +15,13 @@
 
 <% if !order_exist? %>
 	<p>Your shopping cart is empty.</p>
-	<%= link_to "Continue shopping", root_path %>
 <% else %>
 	<table>
 		<thead>
 			<tr>
 				<th colspan="2">Item</th>
-				<th>Quantity</th>
-				<th>Price</th>
+				<th>QTY</th>
+				<th>Unit Price</th>
 				<th>Subtotal</th>
 			</tr>
 		</thead>
@@ -62,13 +61,14 @@
 				<td><%= number_to_currency(@order.delivery_fee) %></td>
 			</tr>
 			<tr>
-				<td colspan="4">Total</td>
+				<td colspan="4">Total (incl. GST)</td>
 				<td><%= number_to_currency(@order.total) %></td>
 			</tr>
 			<tr>
-				<td colspan="5"><%= link_to "Checkout", new_checkout_shipping_address_path %></td>
+				<td colspan="5"><%= link_to "Empty the Shopping Cart", shoppingcart_path, method: :delete, data:{confirm:"Are you sure?"} %></td>
 			</tr>
 		</tfoot>
 	</table>
-	<%= link_to "Empty the Shopping Cart", shoppingcart_path, method: :delete, data:{confirm:"Are you sure?"} %>
+	<div><%= link_to "Checkout", new_checkout_shipping_address_path %></div>
 <% end %>
+<div><%= link_to "Continue shopping", root_path %></div>

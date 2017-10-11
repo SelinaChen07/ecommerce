@@ -7,10 +7,6 @@ class OrderItem < ApplicationRecord
 
 	default_scope -> {order(created_at: :asc)}
 
-	def product
-		product = Product.find_by(id: self.product_id)
-	end
-
 	def subtotal
 		price = self.product.price
 		subtotal = self.product_quantity * price
