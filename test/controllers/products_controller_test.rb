@@ -19,6 +19,9 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_match @product.price.to_s, response.body     
     assert_match "In Stock", response.body
     assert_select "img[src=?]", @photo.image.url
+    assert_select "a[href=?]", shoppingcart_path
+    assert_select "form select", count:1
+    assert_select "form input[value=?]", "Add to Shopping Cart"
   end
 
   test "should create with photo and category" do

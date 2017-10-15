@@ -1,11 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  order_id: 1
-  product_id: 1
-  product_quantity: 1
+#order_item1:
+#  product: product1
+#  product_quantity: 3
 
-two:
-  order_id: 1
-  product_id: 1
-  product_quantity: 1
+#shopping cart is empty.

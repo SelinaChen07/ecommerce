@@ -60,3 +60,6 @@ gem "mini_magick"
 gem 'braintree', '~>2.33.1'
 gem 'figaro', '~>1.1.1'
 gem 'gon', '~> 5.1.2'
+
+# test
+gem 'rails-controller-testing'

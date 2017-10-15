@@ -13,3 +13,10 @@ product2:
   description: This is the description of product 2.
   price: 11.11
   stock: 0
+
+product3:
+  title: Product 3
+  abstract: Abstract of product 3.
+  description: This is the description of product 3.
+  price: 12.90
+  stock: 30
