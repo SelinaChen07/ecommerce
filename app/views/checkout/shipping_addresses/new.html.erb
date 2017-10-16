@@ -60,7 +60,7 @@
 
 		<% label_text = raw "State<span class='must_star'>*</span>" %>
 		<%= f.label :state, label_text, class:"form_label" %>
-		<%= f.select(:state, options_for_select(["ACT","NSW","NT","QLD","SA","Tas","Vic","WA"]),{},{class:"form_input"}) %>
+		<%= f.select(:state, options_for_select(["ACT","NSW","NT","QLD","SA","Tas","Vic","WA"]), { prompt:"SELECT"}, {class:"form_input"}) %>
 
 		<%= f.hidden_field :country%>
 

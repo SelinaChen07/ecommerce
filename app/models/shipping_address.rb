@@ -5,10 +5,12 @@ class ShippingAddress < ApplicationRecord
 	
 	# Validate australian phone number. Supported formats: 0411 234 567, +61411 234 567, (02) 3892 1111, 38921111, 3892 111, 02 3892 1111.
 	VALID_PHONE_REGEX = /\A\({0,1}((0|\+61)(2|4|3|7|8)){0,1}\){0,1}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{2}(\ |-){0,1}[0-9]{1}(\ |-){0,1}[0-9]{3}\z/;
-	validates :phone, presence: true, length:{maximum: 30}, format:{with: VALID_PHONE_REGEX}
+	validates :phone, presence: true, length:{maximum: 30}
+	validates :phone, format:{with: VALID_PHONE_REGEX}, :allow_blank => true
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
-	validates(:email, presence: true, length: {maximum: 255}, format: {with: VALID_EMAIL_REGEX})
+	validates(:email, presence: true, length: {maximum: 255}, 
+	validates :email, format: {with: VALID_EMAIL_REGEX}), :allow_blank=> true
 
 	validates :level_or_suite, length: {maximum: 255}
 

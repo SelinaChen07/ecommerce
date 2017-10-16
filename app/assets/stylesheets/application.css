@@ -321,7 +321,7 @@ thead th {
 }
 
 .must_star{
-    font: red;
+    color: red;
   }
 
 .form_input .form_select{
