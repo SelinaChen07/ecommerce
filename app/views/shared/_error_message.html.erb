@@ -1,0 +1,5 @@
+<% if !object.errors[key].empty? %>
+	<% object.errors[key].each do |msg|%>
+		<p class="alert-danger"><%= msg %></p>
+	<% end %>
+<% end %>
