@@ -6,7 +6,7 @@ class PlaceOrderTest < ActionDispatch::IntegrationTest
   	@product1 = products(:product1)
     @product2 = products(:product2) #out of stock
   	@product3 = products(:product3)
-    @shipping_address = {firstname:"helen", lastname:"LI", phone:"0414987689", email:"Li@Gmail.com", level_or_suite:"", street_address:"19 East drive", suburb_or_city:"Ryde",state:"nsw", contry:"", postcode:"2112"}
+    @shipping_address = {firstname:"helen", lastname:"LI", phone:"0414987689", email:"Li@Gmail.com", level_or_suite:"apt 13", street_address:"19 East drive", suburb_or_city:"Ryde",state:"nsw", contry:"", postcode:"2112"}
   end
 
   test "shopping cart should be empty" do
@@ -77,7 +77,7 @@ class PlaceOrderTest < ActionDispatch::IntegrationTest
     assert_select "a", text:"2. Delivery", count:0
     assert_select "a", text:"3. Payment", count:1
     assert_no_difference "ShippingAddress.count" do
-      patch checkout_shipping_address_path, params:{shipping_address:{firstname:@shipping_address[:firstname], lastname:@shipping_address[:lastname], phone:@shipping_address[:phone], email:@shipping_address[:email], level_or_suite:"", street_address:@shipping_address[:street_address], suburb_or_city:@shipping_address[:suburb_or_city],state:@shipping_address[:state], country:"", postcode:@shipping_address[:postcode]}}
+      patch checkout_shipping_address_path, params:{shipping_address:{firstname:@shipping_address[:firstname], lastname:@shipping_address[:lastname], phone:@shipping_address[:phone], email:@shipping_address[:email], level_or_suite:@shipping_address[:level_or_suite], street_address:@shipping_address[:street_address], suburb_or_city:@shipping_address[:suburb_or_city],state:@shipping_address[:state], country:"", postcode:@shipping_address[:postcode]}}
     end
     assert_redirected_to new_payment_path
 
@@ -94,9 +94,16 @@ class PlaceOrderTest < ActionDispatch::IntegrationTest
       assert_match order_item.product_quantity.to_s, response.body
     end
     assert_match "Delivery Information", response.body
-    @shipping_address.each_value do |value|
-      assert_match value, response.body
-    end
+    assert_match @shipping_address[:firstname].capitalize, response.body
+    assert_match @shipping_address[:lastname].capitalize, response.body
+    assert_match @shipping_address[:phone], response.body
+    assert_match @shipping_address[:email].downcase, response.body
+    assert_match @shipping_address[:level_or_suite].capitalize, response.body
+    assert_match @shipping_address[:street_address].split.map(&:capitalize).join(' '), response.body
+    assert_match @shipping_address[:suburb_or_city].split.map(&:capitalize).join(' '), response.body
+    assert_match @shipping_address[:state].upcase, response.body
+    assert_match "AUSTRALIA", response.body
+    assert_match @shipping_address[:postcode], response.body   
     
   end
 
@@ -179,4 +186,3 @@ class PlaceOrderTest < ActionDispatch::IntegrationTest
   
 end
 
-#145

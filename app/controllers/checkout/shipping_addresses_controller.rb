@@ -35,7 +35,7 @@ class Checkout::ShippingAddressesController < ApplicationController
       order.update(status: "finish editing shipping address")
       redirect_to new_payment_path
     else
-      render "edit" 
+      render "new" 
     end
   end
 
