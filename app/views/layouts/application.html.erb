@@ -18,9 +18,10 @@
 
     <link rel="shortcut icon" href="/logo.png" type="image/png">
 
+    <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
-    
+       
     <!--[if lt IE 9]>
       <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
       </script>
@@ -28,20 +29,25 @@
   </head>
 
   <body>
+    
     <%= render "layouts/header" %>
 
-    <% if !flash.empty? %>
-        <section class="row flash">
+   	<div class="container-fluid main_content">    
+       
+       <% if !flash.empty? %>
+        <section class="flash">
           <% flash.each do |message_type, message| %>
             <div class="alert alert-<%= message_type%>"><%= message %></div>
           <% end %>
         </section>
-    <% end %>
+      <% end %>
 
-  	<div class="container">      
       <%= yield %>
+
     </div>
 
     <%= render "layouts/footer" %>
+
+        
   </body>
 </html>

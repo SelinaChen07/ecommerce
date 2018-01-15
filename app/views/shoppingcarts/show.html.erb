@@ -1,5 +1,7 @@
 <% provide(:title, "Shopping Cart") %>
 
+<%= render "shared/checkout_bar" %>
+
 <ol class = "horizontal_nav checkout_nav">
 	<li class="col-1-3 align-left" id="checkout_session">1. Shopping Cart</li>
 	<% if !order_exist? || current_order.shipping_address.nil? %>

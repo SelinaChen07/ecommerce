@@ -1,27 +1,24 @@
 <% provide(:title,@product.title) %>
 
+<h3><%= @product.title%></h3>
 <section class="row">
-	<div class="grid">
-		<section class="col-1-2">
+	<section class="col-12 col-md-6 col-lg-8">
 			<% if @product.photos.any? %>
 				<% @product.photos.each do |photo| %>
-					<%= image_tag(photo.image.url, class: "product_detailed_image") if photo.image.url %>
+					<%= image_tag(photo.image.url, class: "img-fluid img-thumbnail", width: '400') if photo.image.url %>
 				<% end %>
 			<% end %>
-		</section>
+	</section>
 
-		<section class="col-1-2 product_details">
-			<section class="row"><h1><%= @product.title%></h1></section>
-			<section class="row">
-				<%= link_to("Edit", edit_product_path(@product), class:"btn btn_admin") %>
-				<%= link_to("Delete", product_path(@product), method: :delete, data:{confirm:"Are you sure to delete this product?"}, class:"btn btn_admin") %>
-			</section>
-			<section class="row">
-				<h2><%= number_to_currency(@product.price) %></h2>
+
+	<section class="col-12 col-md-6 col-lg-4">
+			
+			<section class="mt-5 mt-md-0">
+				<h3><%= number_to_currency(@product.price) %></h3>
 				<h4>Availability: <%= @product.stock>0? "In Stock" : "Out of Stock" %></h4>
 			</section>
 
-			<section  class="row">
+			<section>
 				<%= form_for @order_item do |f| %>
 					<%= f.select :product_quantity, options_for_select(1..12, @order_item.product_quantity) %>
 					<%= f.hidden_field :product_id %>
@@ -29,11 +26,15 @@
 				<% end %>
 			</section>
 
-			<section class="row" id="product_description_show">
+			<section class="mt-5">
 				<h2>Product Description</h2>
 				<p><%= @product.description %></p>
 			</section>
-		</section>
-	</div>
+
+			<section>
+				<%= link_to("Edit", edit_product_path(@product), class:"btn btn_admin") %>
+				<%= link_to("Delete", product_path(@product), method: :delete, data:{confirm:"Are you sure to delete this product?"}, class:"btn btn_admin") %>
+			</section>
+	</section>
 </section>
 

@@ -1,0 +1,28 @@
+<!-- photos and img_width are the local variables from render -->
+
+<% if photos.any? %>	
+	<section id="slider" class="mx-auto">
+			<!-- images_container contains all the photos in one row. All images will overflow the slider and be hidden except for the one on show.-->
+			<div id="images_container" class="row no-gutters">
+				<% photos.each do |photo| %>
+					<div class="image_frame col">
+						<%= image_tag(photo.image.url, class: "img-fluid img-thumbnail align-middle", width: '#{img_width}') if photo.image.url %>
+					</div>
+				<% end %>
+			</div>
+			
+			<!-- Arrow buttons to slide left/right manually with absolute position to be placed on top of the image. -->
+			<div class="slide_button" id="pre_button"><a href="#"><%= image_tag("/arrow_left.png") %></a></div>
+			<div class="slide_button" id="next_button"><a href="#"><%= image_tag("/arrow_right.png") %></a></div>
+	</section>
+	
+	<!-- Preview bar to preview the images. Each circle is the preview botton for each image. Image preview is shown when mouse hover on the button. -->
+	<section class="text-center mt-3" id="preview_bar">				
+			<a class="d-inline-block preview_button mx-1" href="#">
+			<!-- Image preview with absolute position to be placed on top of the preview button. Preview is hidden unless hover on. -->	
+				<% photos.each do |photo| %>
+					<%= image_tag(photo.image.url, class: "image_preview") if photo.image.url %>
+				<% end %>
+			</a>
+	</section>
+<% end %>

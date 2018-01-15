@@ -1,0 +1,132 @@
+/*
+  ========================================
+  Using bootstrap framework
+  ========================================
+*/
+/*
+  ========================================
+  Customise Color
+  ========================================
+*/
+
+$purple: #7B68EE;
+$purple-light: #8B79EE;
+$purple-lighter: #A899EE;
+$pink: #E77BFF;
+$primary: $purple;
+$secondary:  $pink;
+
+@import "bootstrap";
+
+/*
+  ========================================
+  Navigation
+  ========================================
+*/
+
+body{
+  padding-top: 6em;
+}
+
+.navbar_logo{
+    font-weight: 100;
+    letter-spacing: .2em;
+    padding: 20px 0 20px 60px;
+    float: left;
+    font-family: 'Lobster', Helvetica, Arial, sans-serif;   
+    background: url("/logo.png") 0 50% no-repeat;
+    background-size: 50px;
+}
+
+
+#nav_highlight{
+  color: red;
+}
+
+.bg_header{
+  background: $purple-lighter;
+  background: linear-gradient(to right,  $purple-lighter, $secondary);
+}
+
+/*
+  ========================================
+  Footer
+  ========================================
+*/
+
+.bg_footer{
+  background: $purple-lighter;
+  background: linear-gradient(to right, $secondary, $purple-lighter);
+}
+
+/*
+  ========================================
+  Main Content
+  ========================================
+*/
+.main_content{
+  padding: 1em 2em;
+}
+
+/*
+  ========================================
+  Product Index
+  ========================================
+*/
+
+.product_title{
+    height: 2.5em; /*line-height is 1em, so 2em is 2line */
+}
+
+.product_abstract {
+    height: 3em;
+}
+
+/*
+  ========================================
+  Product Images
+  ========================================
+*/
+.product_list_image{  
+  max-width: 80%;
+  margin: auto;
+}
+
+.product_detailed_image{
+  
+}
+
+.product_preview_image{
+
+}
+
+
+/*
+ ========================================
+  Checkout
+  ========================================
+*/
+.checkout_nav{  
+  border-bottom: 2px solid black;
+  list-style-type: square;
+  margin-bottom: 20px;
+}
+
+.checkout_nav li{
+  font-size: 36px;
+  line-height: 44px;
+  color: silver;
+
+}
+
+#checkout_session{
+  color: black;
+  font-weight: bolder;
+}
+
+
+#payment_image{
+  height: 40px;
+  vertical-align: baseline;
+
+}

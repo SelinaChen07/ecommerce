@@ -63,3 +63,6 @@ gem 'gon', '~> 5.1.2'
 
 # test
 gem 'rails-controller-testing'
+
+# Boostrap for layout
+gem 'bootstrap', '~> 4.0.0.beta2'

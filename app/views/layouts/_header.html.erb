@@ -1,29 +1,34 @@
-<header class="container header">
-	<section class="primary_header group">
-		<div class="logo">
-			<h1><a href="<%= root_path %>">ONLY 4 YOU</a></h1>
-			<h2>Personalised Gift Station</h2>
-		</div>
-		<div class="header_right">
-			<% shopping_cart_title = order_exist?? "Shopping cart(#{current_order.item_quantity})" : "Shopping Cart" %>
-			<h3><%= link_to "#{shopping_cart_title}", shoppingcart_path %></h3>
-		</div>
-	</section>
-	<nav>
-		<ul class="horizontal_nav primary_nav">
+
+<nav class="navbar navbar-expand-md bg_header navbar-light fixed-top">
+	
+	<%= link_to "Only4You", root_path, class:"navbar-brand navbar_logo" %>
+	
+
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+		<span class="navbar-toggler-icon"></span>
+	</button>		
+
+		
+	<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<ul class="navbar-nav mr-auto">
 			<% Category.all.each do |category| %>
 				
-				<% case category.name.downcase %>
-				<% when "on sale" then category_id = "onsale" %>
-				<% when "best sellers" then category_id = "bestseller" %>
-				<% else category_id = ""%>
+				<% if (category.name.downcase == "on sale") || (category.name.downcase == "best sellers") %>
+					<% category_id = "nav_highlight" %>
+				<% else category_id = "" %>
 				<% end %>
 
-				<li id= <%=category_id%> >
-					<%= link_to category.name, category_path(category)%>
+				<li class="nav-item" >
+					<%= link_to category.name, category_path(category), class:"nav-link", id: "#{category_id}"%>
 				</li>
 			<% end %>
 		</ul>
-	</nav>
 
-</header>
+		<div class="align-self-center" id="shoppingcart">
+			<% shopping_cart_title = order_exist?? "(#{current_order.item_quantity})" : "" %>
+			<%= link_to image_tag("/shoppingcart.png", width:'32')+shopping_cart_title, shoppingcart_path %>
+		</div>
+
+	</div>
+
+</nav>
