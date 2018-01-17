@@ -3,7 +3,7 @@
 //Create slider class
 const sliderFactory = (imgNum) => {
 	
-	let imgIdx = 0; //imgIdx from 0, 1, 2, ... imgNum-1 for all the images. The first onshow image in the slider is image0
+	var imgIdx = 0; //imgIdx from 0, 1, 2, ... imgNum-1 for all the images. The first onshow image in the slider is image0
 
 	//show image with provided index, and also update current imgIdx. If index is not provided, show image with current imgIndx.
 	const showImg = (idx) => {
@@ -62,8 +62,8 @@ $(document).ready(function(){
 
 	if($("#slider").length){
 		//Initialize slider
-		let imgNum = $(".image_preview").length;
-		let slider = sliderFactory(imgNum);
+		var imgNum = $(".image_preview").length;
+		var slider = sliderFactory(imgNum);
 		
 		//bundle slideToNxt event handler to next button
 		$("#next_button").on('click',function(event){
