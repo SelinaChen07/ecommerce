@@ -1,12 +1,12 @@
 //Image Slider
 
 //Create slider class
-const sliderFactory = (imgNum) => {
+const sliderFactory = function(imgNum){
 	
 	var imgIdx = 0; //imgIdx from 0, 1, 2, ... imgNum-1 for all the images. The first onshow image in the slider is image0
 
 	//show image with provided index, and also update current imgIdx. If index is not provided, show image with current imgIndx.
-	const showImg = (idx) => {
+	const showImg = function(idx){
 		if(idx === undefined){
 			idx = imgIdx;
 		}
@@ -14,7 +14,7 @@ const sliderFactory = (imgNum) => {
 		$("#images_container").css("left", ""+imgIdx*-100+"%");
 	};
 
-	const updatePreviewButton = (idx) =>{
+	const updatePreviewButton = function(idx){
 		if(idx === undefined){
 			idx = imgIdx;
 		}
@@ -45,12 +45,12 @@ const sliderFactory = (imgNum) => {
 	};
 
 	//show the preview of the image with the provided index
-	const showPreview = (idx)=>{
+	const showPreview = function(idx){
 		$(".preview_button:nth-child("+(idx+1)+')').children().last().addClass("d-block");
 	};
 
 	//hide the preview of the image with the provided index
-	const hidePreview = (idx)=>{
+	const hidePreview = function(idx){
 		$(".preview_button:nth-child("+(idx+1)+')').children().last().removeClass("d-block");
 	};
     
