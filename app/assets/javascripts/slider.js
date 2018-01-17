@@ -54,7 +54,7 @@ const sliderFactory = function(imgNum){
 		$(".preview_button:nth-child("+(idx+1)+')').children().last().removeClass("d-block");
 	};
     
-    return { imgNum, slideToNxt, slideToPre, showImg, updatePreviewButton, showPreview, hidePreview};
+    return { imgNum:imgNum, slideToNxt:slideToNxt, slideToPre:slideToPre, showImg:showImg, updatePreviewButton:updatePreviewButton, showPreview:showPreview, hidePreview:hidePreview};
 }
 
 //Only create slider object when there is slider in the page
