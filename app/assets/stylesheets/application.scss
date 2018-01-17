@@ -12,6 +12,7 @@
 $purple: #7B68EE;
 $purple-light: #8B79EE;
 $purple-lighter: #A899EE;
+$purple-very-light: #E6E6FA;
 $pink: #E77BFF;
 $primary: $purple;
 $secondary:  $pink;
@@ -129,4 +130,81 @@ body{
   height: 40px;
   vertical-align: baseline;
 
+}
+
+
+/*
+ ========================================
+  Image Slider
+  ========================================
+*/
+$slider_height: 400px;
+$slider_button_width: 80px;
+
+#slider{
+  height: $slider_height;
+  width: 80%;
+  overflow: hidden;
+  position: relative;
+  background-color: $purple-very-light;
+  box-shadow: 3px 6px 2px grey;
+}
+
+.slide_button{
+  position: absolute;
+  opacity: 0.3;
+  width: $slider_button_width;
+  height: $slider_button_width;
+}
+
+#pre_button{
+  left:0;
+  top:($slider_height - $slider_button_width)/2;
+}
+
+#next_button{
+  right:0;
+  top:($slider_height - $slider_button_width)/2;
+}
+
+#images_container{
+  height: 100%;
+  position: absolute;
+  left: 0;  
+}
+
+.image_frame{
+  height: 100%;
+  line-height: 100%;
+  position: relative;
+}
+
+#slider img{
+  max-height: 100%;
+  max-width: 100%;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.preview_button{
+  position: relative;
+  width: 1.5em;
+  height: 1.5em;
+  border: 2px solid black;
+  border-radius: 50%;
+}
+
+.preview_button:first-child{
+  background-color: black;
+}
+
+.image_preview{
+  width: 3em;
+  height: 3em;
+  position: absolute;
+  left:-0.75em;
+  top: -3.5em;
+  display: none;
 }
