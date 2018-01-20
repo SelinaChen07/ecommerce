@@ -14,7 +14,7 @@ $purple-light: #8B79EE;
 $purple-lighter: #A899EE;
 $purple-very-light: #E6E6FA;
 $pink: #E77BFF;
-$primary: $purple;
+$primary: $purple-lighter;
 $secondary:  $pink;
 
 @import "bootstrap";
@@ -131,6 +131,11 @@ body{
   vertical-align: baseline;
 
 }
+/*
+ ========================================
+  Forms
+  ========================================
+*/
 
 
 /*

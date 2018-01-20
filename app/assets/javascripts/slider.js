@@ -58,7 +58,7 @@ const sliderFactory = function(imgNum){
 }
 
 //Only create slider object when there is slider in the page
-$(document).ready(function(){
+$(document).on('turbolinks:load', function(){
 
 	if($("#slider").length){
 		//Initialize slider
@@ -78,11 +78,6 @@ $(document).ready(function(){
 			slider.slideToPre();
 		});
 
-		//adding slide suport to mobile device
-		$("#slider").on('swiperight',slider.slideToPre);
-
-		$("#slider").on('swipeleft', slider.slideToNxt);
-
 		//bundle preview event to preview bar
 		$('#preview_bar').on('click','.preview_button',function(event){
 			event.preventDefault();
@@ -91,7 +86,7 @@ $(document).ready(function(){
 			slider.updatePreviewButton(idx);
 		});
 
-		//Show preview of the image when mouse hover on the preview button
+		//Show/hide preview of the image when mouse hover/leave on the preview button
 		$('#preview_bar').on('mouseenter','.preview_button',function(event){
 			var idx = $(event.target).index(); 
 			slider.showPreview(idx);
