@@ -11,7 +11,7 @@ const formSubmitHandler = function(event){
 	
 
 $(document).on('turbolinks:load', function(){
-	let formElements = $("form.need_validation");
+	var formElements = $("form.need_validation");
 	if(formElements.length){
 		formElements.submit(function(event){
 			formSubmitHandler(event);
