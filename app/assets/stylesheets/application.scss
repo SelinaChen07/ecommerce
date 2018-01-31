@@ -49,10 +49,15 @@ body{
   background: linear-gradient(to right,  $purple-lighter, $secondary);
 }
 
-#shoppingcart a{
-  padding: 0.2em 0.2em 0.2em 2em;
-  background: url("/shoppingcart.png") 0 50% no-repeat;
-  background-size:2em;
+
+
+#shoppingcart_items{
+  padding:.1em .25em .1em .25em;
+  border-radius:30%;
+  background:black;
+  color:white;
+  top: -0.5em;
+  right:-0.5em;
 }
 
 /*

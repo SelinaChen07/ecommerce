@@ -6,23 +6,30 @@ class OrderItemsController < ApplicationController
 		if @order_item = @order.order_items.find_by(product_id: order_item_params[:product_id])
 			product_quantity = @order_item.product_quantity + order_item_params[:product_quantity].to_i
 			if @order_item.update(product_quantity: product_quantity)
-			@msg = "Your product is successfully added to the shopping cart."	    		
+				@msg = "Your product is successfully added to the shopping cart."
+				@msg_type = "success";
+				flash[:success] = @msg
+			else
+				@msg = "Sorry, the maximum ordering amount for each item is 12."
+				@msg_type = "danger";
+				flash[:danger] = @msg
 	    	end
 		else			
 			@order_item = @order.order_items.build(order_item_params)
 	    	if @order_item.save
 	    		@msg = "Your product is successfully added to the shopping cart."
+	    	else
+				@msg = "Sorry, the maximum ordering amount for each item is 12."
+				@msg_type = "danger";
+				flash[:danger] = @msg
 	    	end
 	    end
 
 	    respond_to do |format|
 	    	format.html {
-	    		flash[:success] = @msg
 	    		redirect_to @product
 	    	}
 	    	format.js
-
-
 	    end
 	end
 

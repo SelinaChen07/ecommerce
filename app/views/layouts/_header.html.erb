@@ -26,9 +26,10 @@
 		</ul>
 	</div>
 
-		<div class="align-self-center" id="shoppingcart">
-			<% item_quantity = order_exist?? "(#{current_order.item_quantity})" : "" %>
-			<%= link_to item_quantity, shoppingcart_path, class:"nav-link nav-item bg-white" %>
+		<div class="align-self-center bg-white p-1 pr-3 position-relative" id="shoppingcart">
+			<% item_quantity = order_exist?? "#{current_order.item_quantity}" : "0" %>
+			<%= link_to image_tag("/shoppingcart.png", width:'32'), shoppingcart_path, class:"" %>
+			<div id="shoppingcart_items" class="position-absolute"><%= item_quantity%></div>
 		</div>
 
 	

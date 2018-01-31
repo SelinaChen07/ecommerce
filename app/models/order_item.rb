@@ -3,7 +3,7 @@ class OrderItem < ApplicationRecord
 	belongs_to :order
 	belongs_to :product
 
-	validates :product_quantity, :numericality => {:only_integer => true, :greater_than => 0}
+	validates :product_quantity, :numericality => {:only_integer => true, :greater_than => 0, :less_than => 13 }
 
 	default_scope -> {order(created_at: :asc)}
 

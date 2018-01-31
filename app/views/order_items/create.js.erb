@@ -1,14 +1,14 @@
-const updateShoppingcart = function(){
-	<% item_quantity = order_exist?? "(#{current_order.item_quantity})" : "" %>
-	$('#shoppingcart a').html("<%= item_quantity%>");
+var updateShoppingcart = function(){
+	<% item_quantity = order_exist?? "#{current_order.item_quantity}" : "0" %>
+	$('#shoppingcart_items').html("<%= item_quantity%>");
 };
 
-const addMsg = function(){
+var addMsg = function(){
 	if($('.message').length){
 		$('.message').remove();
 	}
 	<% if !@msg.nil? %>
-        $('.main_content').prepend("<div class='alert alert-success message'><%= @msg %></div>");
+        $('.main_content').prepend("<div class='alert alert-<%= @msg_type %> message'><%= @msg %></div>");
     <% end %>	
 };
 
