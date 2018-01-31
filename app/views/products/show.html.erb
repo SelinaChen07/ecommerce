@@ -16,7 +16,7 @@
 			</section>
 
 			<section>
-				<%= form_for @order_item, html: {class: "form-inline"} do |f| %>
+				<%= form_for @order_item, html: {class: "form-inline", remote:true} do |f| %>
 					<%= f.select :product_quantity, options_for_select(1..12, @order_item.product_quantity),{},{class: "form-group form-control mr-2"} %>
 					<%= f.hidden_field :product_id %>
 					<%= f.submit "Add to Shopping Cart", class:"btn btn-primary" %>

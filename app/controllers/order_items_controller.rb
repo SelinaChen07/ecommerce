@@ -6,19 +6,23 @@ class OrderItemsController < ApplicationController
 		if @order_item = @order.order_items.find_by(product_id: order_item_params[:product_id])
 			product_quantity = @order_item.product_quantity + order_item_params[:product_quantity].to_i
 			if @order_item.update(product_quantity: product_quantity)
-			flash[:success] = "Your product is successfully added to the shopping cart."
-	    		redirect_to @product
-	    	else
-	    		render "products/show"
+			@msg = "Your product is successfully added to the shopping cart."	    		
 	    	end
 		else			
 			@order_item = @order.order_items.build(order_item_params)
 	    	if @order_item.save
-	    		flash[:success] = "Your product is successfully added to the shopping cart."
-	    		redirect_to @product
-	    	else
-	    		render "products/show"
+	    		@msg = "Your product is successfully added to the shopping cart."
 	    	end
+	    end
+
+	    respond_to do |format|
+	    	format.html {
+	    		flash[:success] = @msg
+	    		redirect_to @product
+	    	}
+	    	format.js
+
+
 	    end
 	end
 

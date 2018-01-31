@@ -1,0 +1,18 @@
+const updateShoppingcart = function(){
+	<% item_quantity = order_exist?? "(#{current_order.item_quantity})" : "" %>
+	$('#shoppingcart a').html("<%= item_quantity%>");
+};
+
+const addMsg = function(){
+	if($('.message').length){
+		$('.message').remove();
+	}
+	<% if !@msg.nil? %>
+        $('.main_content').prepend("<div class='alert alert-success message'><%= @msg %></div>");
+    <% end %>	
+};
+
+$("#order_item_product_quantity").val(1);
+updateShoppingcart();
+addMsg();
+

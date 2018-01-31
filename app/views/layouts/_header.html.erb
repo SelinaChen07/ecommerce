@@ -1,13 +1,14 @@
 
 <nav class="navbar navbar-expand-md bg_header navbar-light fixed-top">
 	
-	<%= link_to "Only4You", root_path, class:"navbar-brand navbar_logo" %>
 	
-
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+	<button class="navbar-toggler mr-1" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
 		<span class="navbar-toggler-icon"></span>
-	</button>		
+	</button>
 
+	<%= link_to "Only4You", root_path, class:"navbar-brand navbar_logo mr-auto" %>
+
+	
 		
 	<div class="collapse navbar-collapse" id="collapsibleNavbar">
 		<ul class="navbar-nav mr-auto">
@@ -23,12 +24,13 @@
 				</li>
 			<% end %>
 		</ul>
+	</div>
 
 		<div class="align-self-center" id="shoppingcart">
-			<% shopping_cart_title = order_exist?? "(#{current_order.item_quantity})" : "" %>
-			<%= link_to image_tag("/shoppingcart.png", width:'32')+shopping_cart_title, shoppingcart_path %>
+			<% item_quantity = order_exist?? "(#{current_order.item_quantity})" : "" %>
+			<%= link_to item_quantity, shoppingcart_path, class:"nav-link nav-item bg-white" %>
 		</div>
 
-	</div>
+	
 
 </nav>
