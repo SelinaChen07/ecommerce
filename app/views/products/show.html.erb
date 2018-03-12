@@ -12,14 +12,24 @@
 	<section class="col-12 col-md-6 col-lg-4">			
 			<section class="mt-5 mt-md-0">
 				<h3><%= number_to_currency(@product.price) %></h3>
-				<h4>Availability: <%= @product.stock>0? "In Stock" : "Out of Stock" %></h4>
+
+				<% if @product.stock>0 %>
+					<% stock_text = "In Stock" %>
+					<% link_class = "" %>
+				<% else %>
+					<% stock_text = "Out of Stock" %>
+					<% text_class = "text-warning" %>
+					<% link_class = "disabled disabled_link" %>
+				<% end %>
+
+				<h4 class="<%=text_class%>">Availability: <%= stock_text %></h4>
 			</section>
 
 			<section>
 				<%= form_for @order_item, html: {class: "form-inline", remote:true} do |f| %>
-					<%= f.select :product_quantity, options_for_select(1..12, @order_item.product_quantity),{},{class: "form-group form-control mr-2"} %>
+					<%= f.select :product_quantity, options_for_select(1..Rails.configuration.max_order_quantity, @order_item.product_quantity),{},{class: "form-group form-control mr-2"} %>
 					<%= f.hidden_field :product_id %>
-					<%= f.submit "Add to Shopping Cart", class:"btn btn-primary" %>
+					<%= f.submit "Add to Shopping Cart", class:"btn btn-primary #{link_class}" %>
 				<% end %>
 			</section>
 

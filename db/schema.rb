@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171011012219) do
+ActiveRecord::Schema.define(version: 20180312011834) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,13 @@ ActiveRecord::Schema.define(version: 20171011012219) do
     t.datetime "updated_at",                              null: false
     t.string   "status",              default: "in cart"
     t.integer  "shipping_address_id"
+    t.boolean  "reserve_stock",       default: false
+    t.datetime "reserve_until"
+    t.string   "transaction_id"
+    t.integer  "confirmation_num"
+    t.index ["confirmation_num"], name: "index_orders_on_confirmation_num", using: :btree
+    t.index ["reserve_stock"], name: "index_orders_on_reserve_stock", using: :btree
+    t.index ["status"], name: "index_orders_on_status", using: :btree
   end
 
   create_table "photos", force: :cascade do |t|

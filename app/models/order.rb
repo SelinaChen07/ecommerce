@@ -38,6 +38,21 @@ class Order < ApplicationRecord
 	    end
 	  	self.destroy
 	end
+
+	#To see if the order is reserved and still within valid timeframe?
+	def valid_reserve?
+		if self.reserve_stock
+			if Time.now <= self.reserve_until
+				return true
+			else
+				#change reserve_stock to false to skip checkup this order next time
+				self.update(reserve_stock: false)
+			end
+		end
+		return false
+	end
+
+
 end
 
   

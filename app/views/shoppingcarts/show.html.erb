@@ -1,25 +1,23 @@
 <% provide(:title, "Shopping Cart") %>
 
-<%= render "shared/checkout_bar" %>
-
-<ol class = "horizontal_nav checkout_nav">
-	<li class="col-1-3 align-left" id="checkout_session">1. Shopping Cart</li>
-	<% if !order_exist? || current_order.shipping_address.nil? %>
-		<li class="col-1-3 align-left">2. Delivery</li>
-		<li class="col-1-3 align-left">3. Payment</li>
-	<% else %>
-		<li class="col-1-3 align-left"><%= link_to "2. Delivery", edit_checkout_shipping_address_path%></li>
-		<li class="col-1-3 align-left"><%= link_to "3. Payment", new_payment_path%></li>
-	<% end %>
-	
-</ol>
-
-
 <% if !order_exist? %>
-	<p>Your shopping cart is empty.</p>
+	<h3 class="text-center mt-5 mb-5">Your shopping cart is empty.</h3>
+	<div class="text-center mb-5"><%= link_to "Continue shopping", root_path, class:"btn btn-lg btn-outline-primary" %></div>
 <% else %>
-	<table>
-		<thead>
+
+	<ul class="nav nav-justified nav-tabs mb-4">
+		<li class="nav-item"><%= link_to "1. Shopping Cart",shoppingcart_path, class:"nav-link active disabled_link"%></li>
+		<% if current_order.shipping_address.nil? %>
+		  <% delivery_status = "disabled disabled_link" %>
+		<% else %>
+		  <% delivery_status = "disabled" %>
+		<% end %>
+		<li class="nav-item"><%= link_to "2. Delivery", edit_checkout_shipping_address_path, class:"nav-link #{delivery_status}" %></li>
+		<li class="nav-item"><%= link_to "3. Payment", new_payment_path, class:"nav-link #{delivery_status}" %></li>
+	</ul>
+
+	<table class="table table-responsive-md">
+		<thead class="thead-light">
 			<tr>
 				<th colspan="2">Item</th>
 				<th>QTY</th>
@@ -33,16 +31,16 @@
 				<tr>
 					<% product = order_item.product %>
 					<td >
-						<%=link_to(image_tag(product.photos.first.image.preview.url, class: "product_preview_image"), product_path(product)) if product.photos[0] %>
+						<%=link_to(image_tag(product.photos.first.image.preview.url, class: "img-fluid img_preview_size"), product_path(product)) if product.photos[0] %>
 					</td>
 					<td>
 						<%= link_to(product.title, product_path(product)) %>
 					</td>
-					<td>
-						<%= order_item.print_stock if !order_item.enough_stock? %>
-						<%= form_for order_item do |f| %>
-							<%= f.select :product_quantity, options_for_select(1..12, order_item.product_quantity) %>			
-							<%= f.submit "Update Quantity" %>
+					<td id="item<%=order_item.id%>_stock_status">
+						<p class="text-danger"><%= order_item.stock_alert if !order_item.enough_stock? %></p>
+						<%= form_for order_item, html: {class: "form-inline", remote:true} do |f| %>
+							<%= f.select :product_quantity, options_for_select(1..Rails.configuration.max_order_quantity, order_item.product_quantity),{},{class: "form-group form-control mr-2", id:"order_item_#{order_item.id}_quantity"} %>			
+							<%= f.submit "Update", class:"btn btn-primary" %>
 						<% end %>
 						<%= link_to "Remove", order_item_path(order_item), method: :delete, data:{confirm:"Are you sure?"} %>
 					</td>
@@ -55,22 +53,43 @@
 
 		<tfoot>
 			<tr>
-				<td colspan="4">Subtotal</td>
+				<td></td>
+				<td></td>
+				<td colspan="2">Subtotal</td>
 				<td><%= number_to_currency(@order.subtotal) %></td>
 			</tr>
 			<tr>
-				<td colspan="4">Est. Standard Delivery*</td>
+				<td></td>
+				<td></td>
+				<td colspan="2">Est. Standard Delivery*</td>
 				<td><%= number_to_currency(@order.delivery_fee) %></td>
 			</tr>
 			<tr>
-				<td colspan="4">Total (incl. GST)</td>
+				<td></td>
+				<td></td>
+				<td colspan="2">Total (incl. GST)</td>
 				<td><%= number_to_currency(@order.total) %></td>
 			</tr>
+			<!--
 			<tr>
-				<td colspan="5"><%= link_to "Empty the Shopping Cart", shoppingcart_path, method: :delete, data:{confirm:"Are you sure?"} %></td>
+				<td colspan="5"><%= link_to "Empty the Shopping Cart", shoppingcart_path, method: :delete, data:{confirm:"Are you sure?"}, class:"btn btn-outline-dark btn-sm" %></td>
 			</tr>
+		-->
 		</tfoot>
 	</table>
-	<div><%= link_to "Checkout", new_checkout_shipping_address_path %></div>
+
+	<div class="clearfix">
+		<div class="float-left"><%= link_to "Continue shopping", root_path, class:"btn btn-outline-primary" %></div>
+
+		<% if current_order.shipping_address.nil? %>
+			<% shipping_path = new_checkout_shipping_address_path %>
+		<% else %>	
+			<% shipping_path = edit_checkout_shipping_address_path %>
+		<% end %>
+		<div class="float-right"><%= link_to "Checkout", shipping_path, class:" btn btn-primary" %></div>		
+	</div>
+
+	<p></p>
+	
 <% end %>
-<div><%= link_to "Continue shopping", root_path %></div>
+

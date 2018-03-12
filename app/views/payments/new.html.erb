@@ -1,70 +1,205 @@
 <% provide(:title, "checkout") %>
 
-<% content_for :style do %>
-  .primary_nav{
-    display:none;
-  }
-<% end %>
-
-
-<ol class = "horizontal_nav checkout_nav">
-	<li class="col-1-3 align-left"><%= link_to "1. Shopping Cart", shoppingcart_path %></li>
-	<li class="col-1-3 align-left"><%= link_to "2. Delivery", edit_checkout_shipping_address_path%></li>
-	<li class="col-1-3 align-left" id="checkout_session">3. Payment</li>
-</ol>
+<ul class="nav nav-justified nav-tabs mb-4">
+	<li class="nav-item"><%= link_to "1. Shopping Cart",shoppingcart_path, class:"nav-link disabled"%></li>
+	<li class="nav-item"><%= link_to "2. Delivery", edit_checkout_shipping_address_path, class:"nav-link disabled" %></li>
+	<li class="nav-item"><%= link_to "3. Payment", new_payment_path, class:"nav-link active disabled_link" %></li>
+</ul>
 
 <div class="row">
-	<section class="col-1-2 align-left">
-	  <%= form_tag payments_path do%>
-	    <h2>Pay with credit card or paypal. </h2>
-	    <p>Click on the paypal button to pay with paypal.</p>
-	    <div id="dropin"></div>
-	    <div><%= image_tag "/payment methods.png", alt:"Visa/Master Card/AMEX", id: "payment_image" %></div>
-	    <%= submit_tag "Pay" %>
+	<section class="col-lg-8">
+		
+<!--
+	  	<%= form_tag payments_path, id:"payment_form" do%>
+	   		<%= label_tag(:card_num, "Card Number") %> 
+	   		<div id="card_num"></div>
+
+	   		<%= label_tag(:expiry_date, "Expiry Date") %> 
+	   		<div id="expiry_date"></div>
+
+	   		<%= label_tag(:cvv, "CVV") %> 
+	   		<div id="cvv"></div>
+	    <%= submit_tag "Pay Securely Now", class:"btn btn-primary btn-lg" %>
 	  <%end%>
+-->
+		<div class="card">
+		  <div class="card-header">
+		    <h3 class="card-title">Enter Card Details</h3>
+		  </div>
+		  <%= form_tag payments_path, class:"card-body", id:"payment_form" do %>
+		    <div class="form-row">
+		      <div class="form-group col-sm-8">
+		        <label>Card Number</label>
+		        <!--  Hosted Fields div container -->
+		        <div class="form-control payment_input" id="card-number"></div>
+		        <span class="helper-text"></span>
+		      </div>
+		      <div class="form-group col-sm-4">
+		        <label >Expiration Date</label>
+		        <div class="form-row">
+		          <!--  Hosted Fields div container -->
+		          <div class="form-control col-6 payment_input" id="expiration-month"></div>
+		          <!--  Hosted Fields div container -->
+		          <div class="form-control col-6 payment_input" id="expiration-year"></div>		  
+		        </div>
+		      </div>
+		    </div>
+		    <div class="form-row">
+		      <div class="form-group col-sm-6">
+		        <label>Security Code</label>
+		        <!--  Hosted Fields div container -->
+		        <div class="form-control payment_input" id="cvv"></div>
+		      </div>
+		      <div class="form-group col-sm-6">
+		        <label>Zipcode</label>
+		        <!--  Hosted Fields div container -->
+		        <div class="form-control payment_input" id="postal-code"></div>
+		      </div>
+	    	</div>
+	    	<%= hidden_field_tag :payment_method_nonce, "", id:"nonce" %>
+	    	<div class="text-center">	    		
+	    		<%= submit_tag "Pay Securely Now", class:"btn btn-primary btn-lg", id:"btnSubmit" %>
+	  	  <%end%>
+	    	</div>
+	  	  </form>
+	  	  <div class="card-footer">
+	  	  	<p>We accept <%= image_tag "/payment methods.png", alt:"Visa/Master Card/AMEX", id: "payment_image", width: "130" %> </p>
+	  	  </div>
+	 	</div>
+
 	</section>
 
-	<section class="col-1-2 align-right">
-		<section>
-			<h2>Order Summary</h2>
-			<table class="table-align-right">
-				<tbody>
-					<% @order_items.each do |order_item| %>
-						<tr>
-							<% product = order_item.product %>
-							<td >
-								<%=image_tag(product.photos.first.image.thumb.url, class: "product_preview_image") if product.photos[0]%>
-							</td>
-							<td>
-								<p><%= product.title%></p>
-								<p><%= "QTY #{order_item.product_quantity}" %></p>
-							</td>
-							<td><%= number_to_currency(order_item.subtotal) %></td>
-						</tr>
-					<% end %>
-				</tbody>
-
-
-				<tfoot>
-					<tr>
-						<td colspan="2">Subtotal</td>
-						<td><%= number_to_currency(@order.subtotal) %></td>
-					</tr>
-					<tr>
-						<td colspan="2">Delivery</td>
-						<td><%= number_to_currency(@order.delivery_fee) %></td>
-					</tr>
-					<tr>
-						<td colspan="2">Total (incl. GST)</td>
-						<td><%= number_to_currency(@order.total) %></td>
-					</tr>
-				</tfoot>
-			</table>
+	<aside class="col-lg-4 d-none d-lg-block	">
+		<section class="mb-5">
+			<%= render "shared/order_summary", order: @order %>
 		</section>
 
 		<section>
-			<h2>Delivery Information</h2>
 			<%= render "shared/shipping_address", order: @order %>
 		</section>
-	</section>
+	</aside>
 </div>
+
+<!-- Load the required client component. -->
+<script src="https://js.braintreegateway.com/web/3.31.0/js/client.min.js"></script>
+
+<!-- Load Hosted Fields component. -->
+<script src="https://js.braintreegateway.com/web/3.31.0/js/hosted-fields.min.js"></script>
+
+<script>
+var client_token = "<%= @client_token %>";
+
+
+braintree.client.create({
+  authorization: client_token
+}, function (err, clientInstance) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  braintree.hostedFields.create({
+    client: clientInstance,
+    styles: {
+      'input': {
+        'font-size': '1em',
+        'font-family': 'helvetica, tahoma, calibri, sans-serif',
+        'color': '#3a3a3a',
+        'line-height':'1.5'
+      },
+      ':focus': {
+        'color': 'black'
+      }
+    },
+    fields: {
+      number: {
+        selector: '#card-number',
+        placeholder: 'Your card number'
+      },
+      cvv: {
+        selector: '#cvv'
+      },
+      expirationMonth: {
+        selector: '#expiration-month',
+        placeholder: 'MM'
+      },
+      expirationYear: {
+        selector: '#expiration-year',
+        placeholder: 'YY'
+      },
+      postalCode: {
+        selector: '#postal-code',
+        placeholder: 'Your postal code'
+      }
+    }
+  }, function (err, hostedFieldsInstance) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    hostedFieldsInstance.on('focus', function (event) {
+    	$('#payment_form :disabled').removeAttr('disabled');
+    });
+
+    hostedFieldsInstance.on('validityChange', function (event) {
+      var field = event.fields[event.emittedBy];
+      console.log(field);
+
+      if (field.isValid) {
+        if (event.emittedBy === 'expirationMonth' || event.emittedBy === 'expirationYear') {
+          if (!event.fields.expirationMonth.isValid || !event.fields.expirationYear.isValid) {
+            return;
+          }
+        } else if (event.emittedBy === 'number') {
+          $('#card-number').next('span').text('');
+        }
+                
+        // Remove any previously applied error or warning classes
+
+        $(field.container).parents('.form-group').removeClass('has-warning');
+        $(field.container).parents('.form-group').removeClass('has-success');
+        // Apply styling for a valid field
+        $(field.container).parents('.form-group').addClass('has-success');
+      } else if (field.isPotentiallyValid) {
+        // Remove styling  from potentially valid fields
+        $(field.container).parents('.form-group').removeClass('has-warning');
+        $(field.container).parents('.form-group').removeClass('has-success');
+        if (event.emittedBy === 'number') {
+          $('#card-number').next('span').text('');
+        }
+      } else {
+        // Add styling to invalid fields
+        $(field.container).parents('.form-group').addClass('has-warning');
+        // Add helper text for an invalid card number
+        if (event.emittedBy === 'number') {
+          $('#card-number').next('span').text('Looks like this card number has an error.');
+        }
+      }
+    });
+
+    hostedFieldsInstance.on('cardTypeChange', function (event) {
+      // Handle a field's change, such as a change in validity or credit card type
+      if (event.cards.length === 1) {
+        $('#card-type').text(event.cards[0].niceType);
+      } else {
+        $('#card-type').text('Card');
+      }
+    });
+
+    $('#payment_form').submit(function (event) {
+      event.preventDefault();
+
+      hostedFieldsInstance.tokenize(function (err, payload) {
+        if (err) {
+          console.error(err);
+          console.log("wrong tokenize!");          
+          return;
+        }        
+        $("#nonce").val(payload.nonce);
+        document.getElementById("payment_form").submit();
+      });
+    });
+  });
+});
+</script>

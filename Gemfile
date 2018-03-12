@@ -57,9 +57,9 @@ gem 'carrierwave', '~> 1.0'
 gem "mini_magick"
 
 # Use BrainTree for payment
-gem 'braintree', '~>2.33.1'
+gem 'braintree', '~>2.84.0'
 gem 'figaro', '~>1.1.1'
-gem 'gon', '~> 5.1.2'
+#gem 'gon', '~> 5.1.2'
 
 # test
 gem 'rails-controller-testing'

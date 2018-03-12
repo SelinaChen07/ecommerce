@@ -1,0 +1,35 @@
+var updateItemQty = function(){
+	$('#order_item_<%=@order_item.id%>_quantity').val("<%=@new_quantity%>");
+};
+
+var updateShoppingcart = function(){
+	<% item_quantity = order_exist?? "#{current_order.item_quantity}" : "0" %>
+	$('#shoppingcart_items').html("<%= item_quantity%>");
+};
+
+var addMsg = function(){
+	//remove all the former flash or alert
+	$('.alert').remove();
+	
+	if($('.message').length){
+		$('.message').remove();
+	}
+	<% if !@msg.nil? && @order_item.enough_stock? %>
+        $('.main_content').prepend("<div class='alert alert-success message'><%= @msg %></div>");
+    <% else %>
+    	$('.main_content').prepend("<div class='alert alert-danger message'>Sorry, one or more of the items in your shopping cart is not available. Please review your shopping cart. </div>");
+    <% end %>	
+};
+
+var addStockStatus = function(){
+	$("#item<%=@order_item.id%>_stock_status .text-danger").remove();
+	<%if !@order_item.enough_stock? %>
+		$("#item<%=@order_item.id%>_stock_status").prepend("<p class='text-danger'><%= @order_item.stock_alert%></p>");
+	<% end %>
+	console.log("<%=@order_item.id%> <%=!@order_item.enough_stock?%> <%= @order_item.stock_alert%>");
+}
+
+updateItemQty();
+addMsg();
+updateShoppingcart();
+addStockStatus();

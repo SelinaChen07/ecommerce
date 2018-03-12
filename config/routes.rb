@@ -5,7 +5,6 @@ Rails.application.routes.draw do
     resources :categories
 
     resources :orders
-    get '/confirm_order' => 'orders#confirm_order'
     
     resources :order_items, only:[:create, :update, :destroy]
 
@@ -15,7 +14,7 @@ Rails.application.routes.draw do
         resource :shipping_address, only:[:new, :create, :edit, :update ]
     end
 
-    resources :payments, only: [:new, :create]
+    resources :payments, only: [:new, :create, :show]
 
     root 'categories#index'    
 

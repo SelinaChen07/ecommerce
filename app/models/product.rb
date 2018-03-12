@@ -6,11 +6,15 @@ class Product < ApplicationRecord
 	has_many :categories, through: :categorizations
 	accepts_nested_attributes_for :categorizations, :allow_destroy => true, reject_if: proc{|attributes| attributes['category_id'].blank?}
 
+	has_many :order_items
+	has_many :orders, through: :order_items
+
 	validates :title, presence: true, length:{maximum:255}, uniqueness: true
 	validates :abstract, length:{maximum:255}
 	validates :description, presence: true
 	validates :price, numericality:{less_than: 1000000, greater_than_or_equal_to:0 }
 	validates :stock, numericality:{only_integer: true, greater_than_or_equal_to:0 }
 
+	default_scope  {order(created_at: :asc) }
 
 end

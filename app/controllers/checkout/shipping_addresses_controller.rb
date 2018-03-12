@@ -3,16 +3,18 @@ class Checkout::ShippingAddressesController < ApplicationController
   before_action :check_stock
   before_action :if_address_exist, only:[:new, :create]
   before_action :if_address_not_exist, only:[:edit, :update]
+  before_action :start_reserve #reserve stock for the order items in shopping cart for 20mins
 
   def new
-  	@shipping_address = ShippingAddress.new
-    current_order.update(status: "filling in shipping address")
+  	@order = current_order
+    @shipping_address = ShippingAddress.new
+    @order.update(status: "filling in shipping address")
   end
 
   def edit
-    order = current_order
-  	@shipping_address = order.shipping_address
-    order.update(status: "editing shipping address")
+    @order = current_order
+  	@shipping_address = @order.shipping_address
+    @order.update(status: "editing shipping address")
   	render "new"
   	#The view file for edit is exactly the same as new, except for the value of @shipping_address.
   end

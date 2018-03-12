@@ -1,83 +1,94 @@
 <% provide(:title, "checkout") %>
 
-<% content_for :style do %>
-	.primary_nav{
-		display:none;
-	}
-<% end %>
-
-<ol class = "horizontal_nav checkout_nav">
-	<li class="col-1-3 align-left"><%= link_to "1. Shopping Cart", shoppingcart_path %></li>
-	<li class="col-1-3 align-left" id="checkout_session">2. Delivery</li>
+<ul class="nav nav-justified nav-tabs mb-4">
+	<li class="nav-item"><%= link_to "1. Shopping Cart",shoppingcart_path, class:"nav-link disabled"%></li>
+	<li class="nav-item"><%= link_to "2. Delivery", edit_checkout_shipping_address_path, class:"nav-link active disabled_link" %></li>
 	<% if current_order.shipping_address.nil? %>
-		<li class="col-1-3 align-left">3. Payment</li>
+	  <% delivery_status = "disabled disabled_link" %>
 	<% else %>
-		<li class="col-1-3 align-left"><%= link_to "3. Payment", new_payment_path%></li>
+	  <% delivery_status = "disabled" %>
 	<% end %>
-</ol>
+	<li class="nav-item"><%= link_to "3. Payment", new_payment_path, class:"nav-link #{delivery_status}" %></li>
+</ul>
 
-<section class="col-1-2 align-left">	
-<%= form_for(@shipping_address, url:checkout_shipping_address_path) do |f| %>
-<!--	<%= render "shared/error_messages", object: @shipping_address %> -->
+<div class="row">
+	<section class="col-md-8">
+		<%= form_for(@shipping_address, url:checkout_shipping_address_path, html:{class:"need_validation", novalidate:true}) do |f| %>
+				
+			<%= render "shared/error_messages", object: @shipping_address %>
 
-		<% label_text = raw "First Name<span class='must_star'>*</span>" %>
-		<%= f.label :firstname, label_text, class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"firstname"%>
-		<%= f.text_field :firstname, class:"form_input" %>
-		
+			<div class="form-row">
+				<div class="form-group col-lg-6">
+					<%= f.label :firstname, "First Name", class:"required" %>	
+					<%= f.text_field :firstname, class:"form-control", required:true,maxlength:"255", autocorrect:"off" %>
+					<div class="invalid-feedback">Please input the first name.</div>
+				</div>
+					
+				<div class="form-group col-lg-6">
+					<%= f.label :lastname, "Last Name", class:"required" %>
+					<%= f.text_field :lastname, class:"form-control",  required:true,maxlength:"255", autocorrect:"off" %>
+					<div class="invalid-feedback">Please input the last name.</div>
+				</div>
+			</div>
 
-		<% label_text = raw "Last Name<span class='must_star'>*</span>" %>
-		<%= f.label :lastname, label_text, class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"lastname"%>
-		<%= f.text_field :lastname, class:"form_input" %>
+			<div class="form-row">
+				<div class="form-group col-lg-6">
+					<%= f.label :phone, "Phone(Mobile preferred)", class:"required" %>
+					<%= f.text_field :phone, class:"form-control", required:true, type:"tel",maxlength:"255" %>
+					<small class="form-text">eg. 0411 234 567, (02)38921111.</small>
+					<div class="invalid-feedback">Please input valid phone number.</div>
+				</div>
 
-		<% label_text = raw "Phone(Mobile preferred)<span class='must_star'>*</span>" %>
-		<%= f.label :phone, label_text, class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"phone"%>
-		<p>eg. 0411 234 567, (02)38921111.</p>
-		<%= f.text_field :phone, class:"form_input" %>
+				<div class="form-group col-lg-6">
+					<%= f.label :email, "Email", class:"required" %>
+					<%= f.text_field :email, class:"form-control", type: "email", required:true,maxlength:"255" %>
+					<div class="invalid-feedback">Please input valid email.</div>
+				</div>
+			</div>
 
-		<% label_text = raw "Email<span class='must_star'>*</span>" %>
-		<%= f.label :email, label_text, class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"email"%>
-		<%= f.text_field :email, class:"form_input" %>
+			<div class="form-row">
+				<div class="form-group col-lg-4">
+					<%= f.label :level_or_suite, "Level/Suite" %>
+					<%= f.text_field :level_or_suite, class:"form-control",maxlength:"255", autocorrect:"off" %>
+					<small class="form-text">eg. Apartment 104</small>
+				</div>
+				
+				<div class="form-group col-lg-8">
+					<%= f.label :street_address, "Street Address", class:"required" %>
+					<%= f.text_field :street_address, class:"form-control",required:true, maxlength:"255", autocorrect:"off" %>
+					<div class="invalid-feedback">Please input the valid street address.</div>
+				</div>
+			</div>
 
-		<%= f.label :level_or_suite, "Level/Suite", class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"level_or_suite"%>
-		<p>eg. Apartment 104</p>
-		<%= f.text_field :level_or_suite, class:"form_input" %>
-		
-		<% label_text = raw "Street Address<span class='must_star'>*</span>" %>
-		<%= f.label :street_address, label_text, class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"street_address"%>
-		<%= f.text_field :street_address, class:"form_input" %>
+			<div class="form-row">
+				<div class="form-group col-lg-4">
+					<%= f.label :suburb_or_city, "Suburb/City", class:"required" %>
+					<%= f.text_field :suburb_or_city, class:"form-control", required:true, maxlength:"255", autocorrect:"off" %>
+					<div class="invalid-feedback">Please input the corrent suburb.</div>
+				</div>
 
-		<% label_text = raw "Suburb/City<span class='must_star'>*</span>" %>
-		<%= f.label :suburb_or_city, label_text, class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"suburb_or_city"%>
-		<%= f.text_field :suburb_or_city, class:"form_input" %>
-<!--
-		<% label_text = raw "State<span class='must_star'>*</span>" %>
-		<%= f.label :state, label_text, class:"form_label" %>
-		<%= f.text_field :state, class:"form_input" %>
+				<div class="form-group col-lg-4">
+					<%= f.label :state, "State", class:"required" %>
+					<%= f.select(:state, options_for_select(["ACT","NSW","NT","QLD","SA","Tas","Vic","WA"]), { prompt:"SELECT"}, {class:"form-control",required:true}) %>
+					<div class="invalid-feedback">Please select the state.</div>
+				</div>
 
-		<% label_text = raw "Country<span class='must_star'>*</span>" %>
-		<%= f.label :country, label_text, class:"form_label" %>
-		<%= f.text_field :country, class:"form_input" %>
--->
+				<%= f.hidden_field :country%>
 
-		<% label_text = raw "State<span class='must_star'>*</span>" %>
-		<%= f.label :state, label_text, class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"state"%>
-		<%= f.select(:state, options_for_select(["ACT","NSW","NT","QLD","SA","Tas","Vic","WA"]), { prompt:"SELECT"}, {class:"form_input"}) %>
+				<div class="form-group col-lg-4">
+					<%= f.label :postcode, "Postcode", class:"required" %>
+					<%= f.text_field :postcode, class:"form-control", required:true, maxlength:"255"  %>
+					<div class="invalid-feedback">Please input the postcode.</div>
+				</div>
+			</div>
 
-		<%= f.hidden_field :country%>
+			<%= f.submit "NEXT", class:"btn btn-primary" %>
+		<% end %>
+	</section>
 
-		<% label_text = raw "Post Code<span class='must_star'>*</span>" %>
-		<%= f.label :postcode, label_text, class:"form_label" %>
-		<%= render "shared/error_message", object: @shipping_address, key:"postcode"%>
-		<%= f.text_field :postcode, class:"form_input" %>
+	<aside class="col-md-4 d-none d-md-block">
+		<%= render "shared/order_summary", order: @order %>
+	</aside>
 
-		<%= f.submit "NEXT" %>
-<% end %>
-</section>
+
+</div>

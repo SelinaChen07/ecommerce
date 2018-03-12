@@ -1,11 +1,9 @@
 <% shipping_address = order.shipping_address %>
+<h3>Delivery Information</h3>
 <div>
-	<p class="capitalize"><%= "#{shipping_address.firstname} #{shipping_address.lastname}" %></p>
-	<p class="lowercase"><%= shipping_address.email %></p>
-	<p class="lowercase"><%= shipping_address.phone %></p>
-	<p class="capitalize"><%= "#{shipping_address.level_or_suite}, " if !shipping_address.level_or_suite.empty? %><%= shipping_address.street_address%><%= ", #{shipping_address.suburb_or_city}" if !shipping_address.suburb_or_city.empty? %></p>
-	<p class="uppercase">
-		<%= shipping_address.state%>,
-		<%= shipping_address.country%>, <%= shipping_address.postcode%>
-	</p>
+	<%= "#{shipping_address.firstname} #{shipping_address.lastname}" %></br>
+	<%= shipping_address.email %></br>
+	<%= shipping_address.phone %></br>
+	<%= "#{shipping_address.level_or_suite}, " if !shipping_address.level_or_suite.empty? %><%= shipping_address.street_address%><%= ", #{shipping_address.suburb_or_city}" if !shipping_address.suburb_or_city.empty? %></br>
+	<%= shipping_address.state%>, <%= shipping_address.country%>, <%= shipping_address.postcode%>
 </div>

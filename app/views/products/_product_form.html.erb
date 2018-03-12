@@ -3,7 +3,7 @@
 	<%= render "shared/error_messages", object: product %>
 	
 			<div class="form-group">
-		  		<%= f.label :title, "Title" %>
+		  		<%= f.label :title, "Title", class:"required" %>
 				<%= f.text_field :title, class:"form-control", required:true, maxlength:"255"%>
 				<div class="invalid-feedback">Please input the valid title which should be no more than 255 charaters.</div>
 			</div>
@@ -11,18 +11,18 @@
 		
 			<div class="form-row">
 				<div class="form-group col-md-6">
-					<%= f.label :price, "Price" %>
+					<%= f.label :price, "Price", class:"required" %>
 					<div class="input-group">
 						<div class="input-group-prepend">
 				          <span class="input-group-text">$</span>
 				        </div>
-						<%= f.text_field :price, placeholder:"00.00", class:"form-control", type:"number", step:"0.01", max:"1000000",min:'0' %>
+						<%= f.text_field :price, placeholder:"00.00", class:"form-control", type:"number", step:"0.01", max:"1000000",min:'0', required: true %>
 						<div class="invalid-feedback">Please input the valid price.</div>
 					</div>
 				</div>
 
 				<div class="form-group col-md-6">
-					<%= f.label :stock, "Stock" %>
+					<%= f.label :stock, "Stock", class:"required" %>
 					<%= f.text_field :stock, placeholder:"Integer only", class:"form-control ", required:true, type:"number" %>
 					<div class="invalid-feedback">Please input the valid stock number.</div>
 				</div>
@@ -31,12 +31,12 @@
 		
 			<div class="form-group">
 				<%= f.label :abstract, "Abstract" %>
-				<%= f.text_field :abstract, class:"form-control"  %>
+				<%= f.text_field :abstract, class:"form-control", maxlength:"255"  %>
 				<div class="invalid-feedback">The abstract should be no more than 255 charaters.</div>
 			</div>
 
 			<div class="form-group">
-				<%= f.label :description, "Description" %>
+				<%= f.label :description, "Description", class:"required" %>
 				<%= f.text_area :description, class:"form-control", required:true  %>
 				<div class="invalid-feedback">Please input the description.</div>
 			</div>
@@ -60,7 +60,7 @@
 				<% if added_form.index==0 %>
 				<section>
 				<% end %>
-						<div style="width:250px; display:inline-block; vertical-align:top">
+						<div class="d-inline-block align-top" >
 							<%= image_tag(product.photos[added_form.index].image.preview.url, class: "img-fluid img-thumbnail", height:"200px") %>
 							<%= added_form.hidden_field :image_cache %>
 							<div class="form-check">
