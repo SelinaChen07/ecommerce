@@ -27,14 +27,14 @@ class ProductsController < ApplicationController
   end
 
   def edit
-  	@product = Product.find(params[:id])
+    @product = Product.find(params[:id])
     @category_options = Category.all.map{|category| [category.name, category.id]}
   	6.times{@product.photos.build}
     3.times{@product.categorizations.build}
   end
 
-  def update  	
-  	@product = Product.find(params[:id])
+  def update 
+    @product = Product.find(params[:id])
   	if @product.update(product_params)
      flash[:success] = "The product profile is updated."
   		redirect_to product_path(@product)

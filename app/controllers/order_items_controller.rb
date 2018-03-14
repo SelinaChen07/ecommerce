@@ -37,15 +37,23 @@ class OrderItemsController < ApplicationController
 	end
 
 	def update
+		
 		@order_item = OrderItem.find(params[:id])		
 		@new_quantity = order_item_params[:product_quantity]
-		if @order_item.update(product_quantity: @new_quantity)
-			@msg = "Your product quantity is successfully updated."	
-		end		
+		if !@order_item.update(product_quantity: @new_quantity)
+			@msg_type = "danger"
+			@msg = "Sorry, quantity update failed. Try again, please."
+		elsif @order_item.enough_stock?
+        	@msg_type = "success"
+			@msg = "Your product quantity is successfully updated."
+    	else
+    		@msg_type = "danger"
+			@msg = "Sorry, one or more of the items in your shopping cart is not available. Please review your shopping cart."
+    	end	
 		
 		respond_to do |format|
 	    	format.html {
-	    		flash[:success] = @msg	    		
+	    		flash["#{@msg_type}"] = @msg	    		
 	    		redirect_to shoppingcart_path
 	    	}
 	    	format.js

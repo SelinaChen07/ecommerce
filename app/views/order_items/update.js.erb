@@ -14,11 +14,7 @@ var addMsg = function(){
 	if($('.message').length){
 		$('.message').remove();
 	}
-	<% if !@msg.nil? && @order_item.enough_stock? %>
-        $('.main_content').prepend("<div class='alert alert-success message'><%= @msg %></div>");
-    <% else %>
-    	$('.main_content').prepend("<div class='alert alert-danger message'>Sorry, one or more of the items in your shopping cart is not available. Please review your shopping cart. </div>");
-    <% end %>	
+	$('.main_content').prepend("<div class='alert alert-<%= @msg_type %> message'><%= @msg %></div>");	
 };
 
 var addStockStatus = function(){
@@ -26,7 +22,6 @@ var addStockStatus = function(){
 	<%if !@order_item.enough_stock? %>
 		$("#item<%=@order_item.id%>_stock_status").prepend("<p class='text-danger'><%= @order_item.stock_alert%></p>");
 	<% end %>
-	console.log("<%=@order_item.id%> <%=!@order_item.enough_stock?%> <%= @order_item.stock_alert%>");
 }
 
 updateItemQty();

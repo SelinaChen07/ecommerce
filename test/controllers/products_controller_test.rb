@@ -47,10 +47,10 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
   test "should edit the stock and delete the photo" do
     get edit_product_path(@product)
     assert_response :success
-    patch product_path(@product), params:{product:{title:@product.title,abstract:@product.abstract,description:@product.description,price:@product.price,stock:0, photos_attributes:{'0':{id:@photo.id, _destroy:1}},categorizations_attributes:{'0':{category_id:@category.id}}}}
+    patch product_path(@product), params:{product:{title:@product.title,abstract:@product.abstract,description:@product.description,price:@product.price,stock:"0", photos_attributes:{'0':{id:@photo.id, _destroy:"1"}},categorizations_attributes:{'0':{category_id:@category.id}}}}
     follow_redirect!
     assert_match "Out of Stock", response.body
-    assert_select "img", count:0
+    assert_select "#slider", count:0
   end
 
   
